@@ -22,7 +22,6 @@ function Home() {
   }, []);
   return (
     <main
-      main
       className="h-full min-h-screen max-w-[1440px] mx-auto flex flex-col gap-2"
     >
       <Carousel Animes={Response.trending} />

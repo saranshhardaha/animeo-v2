@@ -124,7 +124,7 @@ export default function Carousel(props) {
                     <div className="flex gap-1 font-semibold text-white">
                       <p>Ep {ani.totalEpisodes}</p>
                       <DotIcon />
-                      <p className="flex items-center gap-1">
+                      <div className="flex items-center gap-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
@@ -138,9 +138,9 @@ export default function Carousel(props) {
                           />
                         </svg>
                         <p>{ani.duration}m</p>
-                      </p>
+                      </div>
                       <DotIcon />
-                      <p className="flex items-center gap-1">
+                      <div className="flex items-center gap-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
@@ -150,11 +150,11 @@ export default function Carousel(props) {
                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                         </svg>
                         <p>{ani.type}</p>
-                      </p>
+                      </div>
                       <DotIcon />
                       <p>{ani.status}</p>
                       <DotIcon />
-                      <p className="flex items-center gap-2 leading-3 ">
+                      <div className="flex items-center gap-2 leading-3 ">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
@@ -169,7 +169,7 @@ export default function Carousel(props) {
                           />
                         </svg>
                         <p>{ani.releaseDate}</p>
-                      </p>
+                      </div>
                     </div>
                     <div className="flex gap-2 text-white/60">
                       {ani.genres.map((genre) => (
@@ -208,13 +208,13 @@ export default function Carousel(props) {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-5 h-5 text-white/80"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
                       />
                     </svg>

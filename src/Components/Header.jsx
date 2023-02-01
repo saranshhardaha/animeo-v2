@@ -5,7 +5,7 @@ class Header extends Component {
     return (
       <nav className="flex bg-white h-16">
         <div className="flex items-center mx-auto gap-2 w-full max-w-[1440px]">
-          <div>LOGO</div>
+          <a href="/">LOGO</a>
           <div>MenuItems</div>
           <div>Search/Login</div>
           <div>

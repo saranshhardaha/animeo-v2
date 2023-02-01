@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { GetAnimeDetails } from "../Utils/DBServices";
 import { useParams } from "react-router-dom";
 import { RemoveHTMLTags } from "../Utils/Utils";
-import { AnimeDetails } from "../DataClass/AnimeDetails";
 import DotIcon from "../Components/DotIcon";
 function AnimeDetail() {
   const { animeId } = useParams();
@@ -12,6 +11,15 @@ function AnimeDetail() {
     description: "",
     synonyms: "",
     title: { english: null },
+    releaseDate: "",
+    season: "",
+    studios: [],
+    popularity: "",
+    episodes: [
+      { id: "", title: "", description: "", number: 1, image: "", airDate: "" },
+    ],
+    countryOfOrigin: "",
+    genres: [],
     startDate: { day: null, month: null, year: null },
   });
   useEffect(() => {
@@ -34,24 +42,28 @@ function AnimeDetail() {
         <div>Scores</div>
         <div>Characters</div>
       </div> */}
-      <section className="relative flex flex-col w-full h-screen bg-black/90">
-        <div className="relative flex w-full">
-          <img src={Response.cover} alt="" className="h-96 object-cover" />
-          <div className="absolute top-3/4 flex w-full h-full">
-            <div className="flex gap-2 backdrop-blur-lg max-w-[1440px] mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full m-6 h-96">
-              <div className="flex gap-8 mx-auto w-full p-8">
-                <div className="flex flex-col items-center gap-2 shrink ">
+      <section className="flex flex-col gap-3 w-full h-full bg-black/90">
+        <div className="relative flex w-full h-full">
+          <img
+            src={Response.cover}
+            alt=""
+            className="h-96 object-cover w-full"
+          />
+          <div className="absolute top-0 w-full h-96">
+            <div className="flex flex-col md:flex-row gap-2 backdrop-blur-md max-w-[1440px] mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full h-full">
+              <div className="flex grow gap-8 mx-auto w-full p-8">
+                <div className="flex flex-col items-center gap-2 shrink">
                   <img
                     src={Response.image}
                     alt=""
-                    className="h-56 ring-1 ring-white"
+                    className="h-56 min-w-[10rem] ring-1 ring-white object-cover"
                   />
                   <div className="flex gap-1 font-semibold text-white">
                     <p className="flex items-center gap-1">{Response.type}</p>
                     <DotIcon />
                     <p>Ep {Response.totalEpisodes}</p>
                     <DotIcon />
-                    <p className="flex items-center gap-1">
+                    <div className="flex items-center gap-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
@@ -65,10 +77,10 @@ function AnimeDetail() {
                         />
                       </svg>
                       <p>{Response.duration}m</p>
-                    </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 grow ">
+                <div className="flex flex-col gap-2 grow w-full">
                   <h2 className="font-semibold text-2xl">
                     {Response.title.english}
                   </h2>
@@ -114,14 +126,13 @@ function AnimeDetail() {
                   </div>
                 </div>
               </div>
-
-              <div className="shrink flex flex-col bg-white/10 h-full gap-2 p-8 w-96">
-                <div className="flex items-center gap-1 ">
-                  <p className="flex text-white/60 min-w-max">Synonyms</p>
-                  <p className="font-semibold truncate">{Response.synonyms}</p>
+              <div className="hidden flex-col shrink bg-white/10 h-full gap-2 p-4 py-8">
+                <div className="flex gap-1">
+                  <p className="flex text-white/60">Synonyms: </p>
+                  <p className="font-semibold">{Response.synonyms}</p>
                 </div>
-                <div className="flex items-center gap-1 min-w-max">
-                  <p className="text-white/60">Aired on</p>
+                <div className="flex items-center gap-1 w-full truncate">
+                  <p className="text-white/60">Aired on: </p>
                   <p className="font-semibold">
                     {Response.startDate.day +
                       "/" +
@@ -130,8 +141,63 @@ function AnimeDetail() {
                       Response.startDate.year}
                   </p>
                 </div>
+                <p>
+                  <span className="text-white/60">Premiered: </span>
+                  {Response.season.toUpperCase()} {Response.releaseDate}
+                </p>
+                <p>
+                  <span className="text-white/60">Duration: </span>
+                  {Response.duration}m
+                </p>
+                <div className="flex gap-1">
+                  <span className="text-white/60">Genres: </span>
+                  <div className="flex gap-2 text-white font-semibold">
+                    {Response.genres.map((genre) => (
+                      <p key={genre}>{genre}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <span className="text-white/60">Studios: </span>
+                  <div className="flex gap-2 text-white font-semibold">
+                    {Response.studios.map((studio) => (
+                      <p key={studio}>{studio}</p>
+                    ))}
+                  </div>
+                </div>
+                <p>
+                  <span className="text-white/60">Country of origin: </span>
+                  {Response.countryOfOrigin}
+                </p>
+                <p>
+                  <span className="text-white/60">Popularity: </span>
+                  {Response.popularity}
+                </p>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3 p-4">
+          <div className="text-white">
+            <h2 className="px-4 p-2 text-xl font-bold">Episodes</h2>
+          </div>
+          <div className="flex flex-col divide-y divide-solid divide-white/10 text-white">
+            {Response.episodes.map((ep) => (
+              <a
+                href={"/watch/" + ep.id}
+                key={ep.id}
+                className="flex gap-2 text-sm p-2 px-4 hover:bg-white/5"
+              >
+                <img src={ep.image} alt="" className="h-12 w-12 flex" />
+                <div>
+                  <div className="flex gap-2 text-base">
+                    <span className="min-w-max">Ep {ep.number}</span>
+                    <p className="text-base">{ep.title}</p>
+                  </div>
+                  <p className="text-white/50 line-clamp-2">{ep.description}</p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
