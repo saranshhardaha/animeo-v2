@@ -8,7 +8,7 @@ class AnimeCard extends Component {
       <>
         <div
           key={this.props.Anime.id}
-          className="flex flex-col relative max-w-[400px] min-w-[260px] group "
+          className="flex flex-col relative max-w-[270px] min-w-[260px] group "
         >
           <div className="flex flex-col h-full relative">
             <img
@@ -44,7 +44,7 @@ class AnimeCard extends Component {
               </div>
             </div>
           </div>
-          <div className="absolute z-10 left-1/3 top-1/3 w-96 hidden flex-col gap-4 text-white backdrop-blur-lg bg-black/60 transition-all duration-700 ease-in-out group-hover:flex p-5 ring-1 ring-white">
+          <div className="absolute z-10 left-1/3 top-1/3 w-96 hidden flex-col gap-4 text-white backdrop-blur-lg bg-black/80 transition-all duration-700 ease-in-out group-hover:flex p-5 ring-1 ring-white">
             <div className="flex flex-col gap-1">
               <h1 className="font-bold text-lg">
                 {this.props.Anime.title.english}
@@ -69,7 +69,7 @@ class AnimeCard extends Component {
             </div>
             <div className="flex gap-2">
               <a
-                href={"/watch/" + this.props.Anime.id}
+                href={"/anime/" + this.props.Anime.id}
                 className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
               >
                 <svg

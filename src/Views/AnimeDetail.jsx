@@ -43,21 +43,26 @@ function AnimeDetail() {
         <div>Characters</div>
       </div> */}
       <section className="flex flex-col gap-3 w-full h-full bg-black/90">
-        <div className="relative flex w-full h-full">
+        <div className="flex flex-col w-full h-full">
           <img
             src={Response.cover}
             alt=""
-            className="h-96 object-cover w-full"
+            className="h-80 object-cover w-full"
           />
-          <div className="absolute top-0 w-full h-96">
-            <div className="flex flex-col md:flex-row gap-2 backdrop-blur-md max-w-[1440px] mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full h-full">
-              <div className="flex grow gap-8 mx-auto w-full p-8">
-                <div className="flex flex-col items-center gap-2 shrink">
+          <div className="flex w-full h-96">
+            <div className="flex flex-col md:flex-row backdrop-blur-md mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full h-full">
+              <div className="flex flex-col md:flex-row grow gap-8 mx-auto w-full p-8 max-w-[1440px]">
+                <div className="flex flex-col items-center">
                   <img
                     src={Response.image}
                     alt=""
-                    className="h-56 min-w-[10rem] ring-1 ring-white object-cover"
+                    className="w-36 md:w-80 h-auto aspect-[3/4] ring-1 ring-white object-cover -mt-32"
                   />
+                </div>
+                <div className="flex flex-col gap-2 grow w-full">
+                  <h2 className="font-semibold text-2xl">
+                    {Response.title.english}
+                  </h2>
                   <div className="flex gap-1 font-semibold text-white">
                     <p className="flex items-center gap-1">{Response.type}</p>
                     <DotIcon />
@@ -79,14 +84,8 @@ function AnimeDetail() {
                       <p>{Response.duration}m</p>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col gap-2 grow w-full">
-                  <h2 className="font-semibold text-2xl">
-                    {Response.title.english}
-                  </h2>
-
                   <div>
-                    <p className="line-clamp-4">
+                    <p className="line-clamp-4 text-white/70">
                       {RemoveHTMLTags(Response.description)}
                     </p>
                   </div>
@@ -177,24 +176,46 @@ function AnimeDetail() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-3 p-4">
-          <div className="text-white">
+        <div className="flex flex-col gap-3 p-4 max-w-[1440px] w-full mx-auto">
+          <div className="flex items-center justify-between text-white">
             <h2 className="px-4 p-2 text-xl font-bold">Episodes</h2>
+            <div className="flex gap-1 p-1 items-center ring-1 bg-black/10 ring-white/80 backdrop-blur">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 bg-transparent"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <input
+                type="text"
+                className="px-2 bg-black/10 max-w-[16rem] border-0"
+              />
+            </div>
           </div>
-          <div className="flex flex-col divide-y divide-solid divide-white/10 text-white">
+          <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto">
             {Response.episodes.map((ep) => (
               <a
                 href={"/watch/" + ep.id}
                 key={ep.id}
-                className="flex gap-2 text-sm p-2 px-4 hover:bg-white/5"
+                className="flex gap-2 text-sm p-2 md:px-4 hover:bg-white/5"
               >
-                <img src={ep.image} alt="" className="h-12 w-12 flex" />
-                <div>
-                  <div className="flex gap-2 text-base">
-                    <span className="min-w-max">Ep {ep.number}</span>
-                    <p className="text-base">{ep.title}</p>
+                <div className="flex gap-2 items-center">
+                  <div className="font-bold text-center text-base md:text-xl w-12 md:w-16">
+                    {ep.number}
                   </div>
-                  <p className="text-white/50 line-clamp-2">{ep.description}</p>
+                  <div className="flex flex-col w-full">
+                    <p className="text-base">{ep.title}</p>
+                    <p className="text-white/50 line-clamp-1">
+                      {ep.description}
+                    </p>
+                  </div>
                 </div>
               </a>
             ))}

@@ -4,8 +4,8 @@ import AnimeCard from "./AnimeCard";
 export default class AnimeCardsScroll extends Component {
   render() {
     return (
-      <>
-        <div className="flex items-center justify-between my-4">
+      <div className="max-w-[1440px] px-5">
+        <div className="flex items-center justify-between my-4 ">
           <p className="text-2xl font-bold border-l-4 border-black px-2 leading-7">
             {this.props.Title}
           </p>
@@ -27,12 +27,12 @@ export default class AnimeCardsScroll extends Component {
             </svg>
           </a>
         </div>
-        <div className="flex gap-2 relative h-full w-full overflow-x-auto overflow-y-clip">
+        <div className="flex  flex-wrap gap-2 relative h-full w-full ">
           {this.props.Animes.map((anime) => (
             <AnimeCard Anime={anime} key={anime.id} />
           ))}
         </div>
-      </>
+      </div>
     );
   }
 }

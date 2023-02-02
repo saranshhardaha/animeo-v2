@@ -4,13 +4,10 @@ class Header extends Component {
   render() {
     return (
       <nav className="flex bg-white h-16">
-        <div className="flex items-center mx-auto gap-2 w-full max-w-[1440px]">
-          <a href="/">LOGO</a>
+        <div className="flex items-center mx-auto gap-2 w-full max-w-[1440px] px-6">
+          <a href="/">Home</a>
           <div>MenuItems</div>
-          <div>Search/Login</div>
-          <div>
-            <input type="search" name="search" className="px-3 p-2 ring-1 ring-black backdrop-blur-md bg-transparent focus-visible:ring-0"/>
-          </div>
+          <div>Login</div>
         </div>
       </nav>
     );
