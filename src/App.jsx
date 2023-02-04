@@ -10,13 +10,15 @@ function App() {
     <div className="App font-manrope bg-white text-black">
       <AnimateSharedLayout type="crossfade">
         <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/anime/:animeId" element={<AnimeDetail />} />
-            <Route path="/watch/:episodeID" element={<Watch />} />
-          </Routes>
-        </BrowserRouter>
+        <div className="pb-10">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/anime/:animeId" element={<AnimeDetail />} />
+              <Route path="/watch/:episodeID" element={<Watch />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </AnimateSharedLayout>
     </div>
   );

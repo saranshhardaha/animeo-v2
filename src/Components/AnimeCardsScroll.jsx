@@ -16,30 +16,19 @@ export default class AnimeCardsScroll extends Component {
   render() {
     return (
       <>
-        <div className=" max-w-[1440px] mx-auto">
+        <div
+          className={`max-w-[1200px] mx-auto w-full p-4 md:px-0 ${this.props.DarkTitle?"text-black":"text-white"}`}
+        >
           <div className="flex items-center justify-between my-4">
             <p className="text-2xl font-bold border-l-4 border-black px-2 leading-7">
               {this.props.Title}
             </p>
             <a href="/" className="flex items-center gap-1 hover:underline">
               <p className="text-lg font-semibold px-1">All</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
+              <Icon.ChevronRight />
             </a>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 relative h-full w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 place-items-center relative h-full w-full">
             {/* {this.props?.Animes?.map((anime) => (
             <AnimeCard Anime={anime} key={anime?.id} />
           ))} */}
@@ -62,10 +51,10 @@ export default class AnimeCardsScroll extends Component {
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
               transition={{ duration: 0.2, delay: 0.15 }}
               style={{ pointerEvents: "auto" }}
-              className="fixed z-20 grid place-items-center top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2  w-full h-full bg-black/50"
+              className="fixed z-20 grid place-items-center top-0 left-0 p-2 w-full h-full bg-black/80"
             >
               <motion.div
-                className="flex flex-col max-w-[50rem] bg-black/20 ring-1 ring-white/40 backdrop-blur-xl m-2 text-white"
+                className="flex flex-col max-w-[50rem] w-full bg-black/20 ring-1 ring-white/40 backdrop-blur-xl m-2 text-white"
                 layoutId={this.state.selectedAnime?.id}
               >
                 <div className="absolute top-2 right-2 flex justify-end items-center w-full">
@@ -96,9 +85,7 @@ export default class AnimeCardsScroll extends Component {
                     <p>{this.state.selectedAnime?.releaseDate}</p>
                   </div>
                   <div className="flex gap-2 text-white/60">
-                    {this.state.selectedAnime?.genres?.map((genre) => (
-                      <p key={genre}>{genre}</p>
-                    ))}
+                    {this.state.selectedAnime?.genres?.join(", ")}
                   </div>
                   <div className="flex flex-col gap-2">
                     <p className="line-clamp-6 text-white/90">
@@ -109,7 +96,7 @@ export default class AnimeCardsScroll extends Component {
                         href={"/anime/" + this.state.selectedAnime?.id}
                         className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
                       >
-                        <Icon.Play />
+                        <Icon.Play fill="#fff" />
                         <p className="text-sm">Watch Now</p>
                       </a>
                       <button className="ring-1 ring-white p-3 backdrop-blur bg-white/20 hover:bg-white/40">

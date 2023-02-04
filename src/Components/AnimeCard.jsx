@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React, { Component } from "react";
 import DotIcon from "Components/DotIcon";
 import { RemoveHTMLTags } from "Utils/Utils";
+import { Play, Star } from "react-feather";
 
 class AnimeCard extends Component {
   render() {
@@ -9,39 +10,29 @@ class AnimeCard extends Component {
       <>
         <motion.div
           key={this.props.Anime?.id}
-          className="flex flex-col relative max-w-[270px] min-w-[200px] group "
+          className="flex flex-col relative max-w-[270px] group "
         >
           <motion.div className="flex flex-col h-full relative">
             <img
               src={this.props.Anime?.image}
               alt={this.props.Anime?.title.english}
-              className="w-full bg-black aspect-[5/7] ring-1 ring-white/50"
+              className="w-full h-auto bg-black aspect-[5/7] ring-1 ring-white/50"
             />
-            <div className="absolute flex items-center gap-1 m-4 bg-white/30 backdrop-blur-3xl text-white  rounded-full font-semibold p-2 px-3 h-8 max-w-max">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {(this.props.Anime?.rating / 10).toFixed(1)}
-            </div>
-            <div className="p-2">
-              <h1 className="font-bold text-lg truncate">
-                {this.props.Anime?.title.english}
-              </h1>
-              <div className="flex gap-1 font-semibold text-neutral-600">
-                <p>Ep {this.props.Anime?.totalEpisodes}</p>
-                <DotIcon />
-                <p>{this.props.Anime?.status}</p>
-                <DotIcon />
-                <p>{this.props.Anime?.releaseDate}</p>
+            <div className="absolute flex flex-col h-full w-full items-start justify-between gap-1">
+              <div className="flex items-center gap-1 text-sm bg-white/30 backdrop-blur-3xl text-white  rounded-full m-2 font-semibold p-2 px-2 h-8 max-w-max">
+                <Star height="0.75rem" width="0.75rem" fill="#fff" />
+                {(this.props.Anime?.rating / 10).toFixed(1)}
+              </div>
+
+              <div className="flex flex-col justify-end p-2 bg-gradient-to-t from-black via-black/80 text-white w-full h-32">
+                <h1 className="font-semibold text-lg truncate w-full">
+                  {this.props.Anime?.title.english}
+                </h1>
+                <div className="flex gap-1 text-sm text-white/50">
+                  <p>{this.props.Anime?.status}</p>
+                  <DotIcon />
+                  <p>{this.props.Anime?.releaseDate}</p>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -73,33 +64,11 @@ class AnimeCard extends Component {
                 href={"/anime/" + this.props.Anime?.id}
                 className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <Play />
                 <p className="text-sm">Watch Now</p>
               </a>
               <button className="ring-1 ring-white p-3 backdrop-blur bg-white/20 hover:bg-white/40">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <Star />
               </button>
             </div>
           </div>

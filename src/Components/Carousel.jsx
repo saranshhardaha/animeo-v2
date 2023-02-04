@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { RemoveHTMLTags } from "Utils/Utils";
 import DotIcon from "Components/DotIcon";
+import { ChevronDown, ChevronUp, Clock, Play, Star } from "react-feather";
 
 export default function Carousel(props) {
   var isMouseOver = false;
@@ -43,18 +44,7 @@ export default function Carousel(props) {
             id="slide-arrow-up"
             onClick={() => Slide("UP")}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M11.47 7.72a.75.75 0 011.06 0l7.5 7.5a.75.75 0 11-1.06 1.06L12 9.31l-6.97 6.97a.75.75 0 01-1.06-1.06l7.5-7.5z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronUp />
           </button>
 
           <button
@@ -62,18 +52,7 @@ export default function Carousel(props) {
             id="slide-arrow-down"
             onClick={() => Slide("DOWN")}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronDown />
           </button>
         </div>
 
@@ -95,7 +74,7 @@ export default function Carousel(props) {
                 id="slide"
                 onMouseEnter={OnMouseEnter}
                 onMouseLeave={OnMouseExit}
-                className="absolute flex flex-col gap-3 justify-end text-white p-5 md:p-8 md:pr-20 w-full bg-gradient-to-t from-black via-black/80 h-96"
+                className="absolute flex flex-col gap-3 justify-end text-white p-4 md:p-8 md:pr-20 w-full bg-gradient-to-t from-black via-black/80 h-96"
               >
                 <div className="flex flex-col justify-between h-full">
                   <div className="flex items-end gap-2 filter drop-shadow-2xl">
@@ -106,18 +85,7 @@ export default function Carousel(props) {
                   </div>
                   <div className="flex flex-col gap-1">
                     <div className=" flex items-center gap-1 bg-white/10 backdrop-blur-lg text-white text-sm rounded-full font-semibold p-2 px-3 h-8 max-w-min">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-3 h-3"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <Star size={"0.75rem"} fill="#fff"/>
                       {(ani?.rating / 10).toFixed(1)}
                     </div>
                     <h2 className="font-bold text-lg md:text-xl line-clamp-1">
@@ -127,30 +95,12 @@ export default function Carousel(props) {
                       <p>Ep {ani?.totalEpisodes}</p>
                       <DotIcon />
                       <div className="flex items-center gap-1">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        <Clock size={"0.75rem"}/>
                         <p>{ani?.duration}m</p>
                       </div>
                       <DotIcon />
                       <div className=" items-center gap-1 hidden md:flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                        </svg>
+                        <Play fill="#fff" size={"0.75rem"}/>
                         <p>{ani?.type}</p>
                       </div>
                       <DotIcon />

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { RemoveHTMLTags } from "Utils/Utils";
 import DotIcon from "Components/DotIcon";
 import AnimeCardsScroll from "Components/AnimeCardsScroll";
+import { Search } from "react-feather";
 function AnimeDetail() {
   const { animeId } = useParams();
   const [response, setResponse] = useState(null);
@@ -31,7 +32,7 @@ function AnimeDetail() {
           />
           <div className="flex w-full">
             <div className="flex flex-col md:flex-row backdrop-blur-md mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full h-full">
-              <div className="flex flex-col lg:flex-row grow gap-8 mx-auto w-full p-6 max-w-[1440px]">
+              <div className="flex flex-col lg:flex-row grow gap-8 mx-auto w-full p-4 max-w-[1200px]">
                 <div className="flex flex-col items-center -mt-20 sm:-mt-32 lg:m-0">
                   <div className=" bg-black">
                     <img
@@ -165,26 +166,14 @@ function AnimeDetail() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-3 p-4 max-w-[1440px] w-full mx-auto">
+        <div className="flex flex-col gap-3 p-4 max-w-[1200px] w-full mx-auto">
           <div className="flex items-center justify-between text-white">
-            <h2 className="px-4 p-2 text-xl font-bold">Episodes</h2>
-            <div className="flex gap-1 p-1 items-center ring-1 bg-black/10 ring-white/80 backdrop-blur">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-5 h-5 bg-transparent"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
-                  clipRule="evenodd"
-                />
-              </svg>
-
+            <h2 className="py-2 px-1 text-xl font-bold">Episodes</h2>
+            <div className="flex gap-1 p-1 px-2 items-center ring-1 bg-black/10 ring-white/80 backdrop-blur">
+              <Search size="1rem" />
               <input
                 type="text"
-                className="px-2 bg-black/10 max-w-[16rem] border-0"
+                className="px-2 w-full max-w-[14rem] bg-transparent border-0"
               />
             </div>
           </div>
@@ -193,7 +182,7 @@ function AnimeDetail() {
               <a
                 href={"/watch/" + ep.id}
                 key={ep.id}
-                className="flex gap-2 text-sm p-2 md:px-4 hover:bg-white/5"
+                className="flex gap-2 text-sm py-2 md:px-4 hover:bg-white/5"
               >
                 <div className="flex gap-2 items-center">
                   <div className="font-bold text-center text-base md:text-xl w-12 md:w-16">
@@ -210,13 +199,13 @@ function AnimeDetail() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-3 p-4 max-w-[1440px] w-full mx-auto">
+        <div className="flex flex-col gap-3 p-4 max-w-[1200px] w-full mx-auto">
           <div className="flex items-center justify-between text-white">
-            <h2 className="px-4 p-2 text-xl font-bold">Characters</h2>
+            <h2 className="py-2 px-1 text-xl font-bold">Characters</h2>
           </div>
-          <div className="grid grid-cols-2 p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-center p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur ">
             {response?.characters?.map((char) => (
-              <div className="flex gap-3 p-2">
+              <div className="flex gap-3 p-2 w-full" key={char.id}>
                 <img
                   src={char?.image}
                   alt="test"
@@ -226,19 +215,17 @@ function AnimeDetail() {
                   <p className="text-lg text-white font-semibold">
                     {char.name.full}
                   </p>
-                  <p>Role: {char.role}</p>
-                  <p>Voice: {char.voiceActors[0].name.full}</p>
+                  <p>Role: {char?.role}</p>
+                  <p>Voice: {char?.voiceActors[0]?.name?.full}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="px-2">
-          <AnimeCardsScroll
-            Title="Recommendations"
-            Animes={response?.recommendations}
-          />
-        </div>
+        <AnimeCardsScroll
+          Title="Recommendations"
+          Animes={response?.recommendations}
+        />
       </section>
     </>
   );
