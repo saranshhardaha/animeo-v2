@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { RemoveHTMLTags } from "../Utils/Utils";
-import DotIcon from "./DotIcon";
+import { RemoveHTMLTags } from "Utils/Utils";
+import DotIcon from "Components/DotIcon";
 
 export default function Carousel(props) {
   var isMouseOver = false;
@@ -16,14 +16,14 @@ export default function Carousel(props) {
     const slider = document.getElementById("sliderContent");
     if (slider.onmouseover) return;
     const slideWidth = document.getElementsByClassName("slide")[0].clientHeight;
-    if (action == "DOWN" && slider.scrollTop == slider.clientHeight * 19) {
+    if (action === "DOWN" && slider.scrollTop === slider.clientHeight * 19) {
       slider.scrollTop = 0;
       return;
-    } else if (action == "UP" && slider.scrollTop == 0) {
+    } else if (action === "UP" && slider.scrollTop === 0) {
       slider.scrollTop = slider.clientHeight * 19;
       return;
     }
-    if (action == "DOWN") slider.scrollTop += slideWidth;
+    if (action === "DOWN") slider.scrollTop += slideWidth;
     else slider.scrollTop -= slideWidth;
   }
   useEffect(() => {
@@ -32,11 +32,11 @@ export default function Carousel(props) {
     }, 4500);
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <>
-      <section className="relative overflow-hidden w-full h-96 md:h-[28rem]">
+      <section className="relative overflow-hidden w-full h-96">
         <div className="absolute bottom-0 right-0 z-10 md:flex flex-col gap-2 m-8 hidden ">
           <button
             className="bg-white/10 p-2 backdrop-blur ring-1 ring-white/50 hover:bg-white/30 text-white"
@@ -81,25 +81,25 @@ export default function Carousel(props) {
           id="sliderContent"
           className="flex flex-col w-full h-full snap-y snap-mandatory overflow-auto scroll-smooth transition-all  scrollbar-hide"
         >
-          {props.Animes.map((ani, key) => (
+          {props.Animes?.map((ani, key) => (
             <div
               key={key}
-              className="slide relative flex w-full snap-center md:pb-16 bg-black"
+              className="slide relative flex w-full snap-center bg-black"
             >
               <img
-                src={ani.cover}
-                alt={ani.id}
-                className="w-full h-[24rem] object-cover flex-1"
+                src={ani?.cover}
+                alt={ani?.id}
+                className="w-full h-96 object-cover flex-1"
               />
               <div
                 id="slide"
                 onMouseEnter={OnMouseEnter}
                 onMouseLeave={OnMouseExit}
-                className="absolute flex flex-col gap-3 justify-end text-white p-5 md:p-8 md:pr-20 w-full bg-gradient-to-t from-black via-black/80 h-full"
+                className="absolute flex flex-col gap-3 justify-end text-white p-5 md:p-8 md:pr-20 w-full bg-gradient-to-t from-black via-black/80 h-96"
               >
                 <div className="flex flex-col justify-between h-full">
                   <div className="flex items-end gap-2 filter drop-shadow-2xl">
-                    <p className="text-xl font-black drop-shadow-2xl">
+                    <p className="text-lg font-black drop-shadow-2xl">
                       #{++key}
                     </p>
                     <p className="font-semibold drop-shadow-2xl">Spotlight</p>
@@ -118,11 +118,13 @@ export default function Carousel(props) {
                           clipRule="evenodd"
                         />
                       </svg>
-                      {(ani.rating / 10).toFixed(1)}
+                      {(ani?.rating / 10).toFixed(1)}
                     </div>
-                    <h2 className="font-bold text-lg md:text-2xl line-clamp-1">{ani.title.english}</h2>
-                    <div className="flex gap-1 font-semibold text-xs md:text-base text-white">
-                      <p>Ep {ani.totalEpisodes}</p>
+                    <h2 className="font-bold text-lg md:text-xl line-clamp-1">
+                      {ani?.title.english}
+                    </h2>
+                    <div className="flex gap-1 font-semibold text-xs md:text-sm text-white">
+                      <p>Ep {ani?.totalEpisodes}</p>
                       <DotIcon />
                       <div className="flex items-center gap-1">
                         <svg
@@ -137,7 +139,7 @@ export default function Carousel(props) {
                             clipRule="evenodd"
                           />
                         </svg>
-                        <p>{ani.duration}m</p>
+                        <p>{ani?.duration}m</p>
                       </div>
                       <DotIcon />
                       <div className=" items-center gap-1 hidden md:flex">
@@ -149,10 +151,10 @@ export default function Carousel(props) {
                         >
                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                         </svg>
-                        <p>{ani.type}</p>
+                        <p>{ani?.type}</p>
                       </div>
                       <DotIcon />
-                      <p>{ani.status}</p>
+                      <p>{ani?.status}</p>
                       <DotIcon />
                       <div className="flex items-center gap-2 leading-3 ">
                         <svg
@@ -168,22 +170,22 @@ export default function Carousel(props) {
                             clipRule="evenodd"
                           />
                         </svg>
-                        <p>{ani.releaseDate}</p>
+                        <p>{ani?.releaseDate}</p>
                       </div>
                     </div>
-                    <div className="flex gap-2 text-white/60 w-full text-xs md:text-base">
-                      {ani.genres.map((genre) => (
+                    <div className="flex gap-2 text-white/60 w-full text-xs md:text-sm">
+                      {ani?.genres.map((genre) => (
                         <p key={genre}>{genre}</p>
                       ))}
                     </div>
                     <p className="line-clamp-3 text-sm md:text-base text-white/70">
-                      {RemoveHTMLTags(ani.description)}
+                      {RemoveHTMLTags(ani?.description)}
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <a
-                    href=""
+                    href={"watch/" + ani?.episodes?.[0]?.id}
                     className="flex items-center gap-2 px-4 p-2 bg-white/10 backdrop-blur-sm max-w-max ring-1 ring-white/50 hover:bg-white/20"
                   >
                     <svg
@@ -201,7 +203,7 @@ export default function Carousel(props) {
                     <p>Watch Now</p>
                   </a>
                   <a
-                    href={"/anime/" + ani.id}
+                    href={"/anime/" + ani?.id}
                     className="flex items-center gap-2 leading-3 px-4 p-2 bg-white/10 backdrop-blur-sm max-w-max ring-1 ring-white/20 hover:bg-white/20"
                   >
                     <svg

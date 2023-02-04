@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import DotIcon from "../Components/DotIcon";
-import { RemoveHTMLTags } from "../Utils/Utils";
+import { motion } from "framer-motion";
+import React, { Component } from "react";
+import DotIcon from "Components/DotIcon";
+import { RemoveHTMLTags } from "Utils/Utils";
 
 class AnimeCard extends Component {
   render() {
     return (
       <>
-        <div
-          key={this.props.Anime.id}
-          className="flex flex-col relative max-w-[270px] min-w-[260px] group "
+        <motion.div
+          key={this.props.Anime?.id}
+          className="flex flex-col relative max-w-[270px] min-w-[200px] group "
         >
-          <div className="flex flex-col h-full relative">
+          <motion.div className="flex flex-col h-full relative">
             <img
-              src={this.props.Anime.image}
-              alt={this.props.Anime.title.english}
-              className="w-full h-full bg-black"
+              src={this.props.Anime?.image}
+              alt={this.props.Anime?.title.english}
+              className="w-full bg-black aspect-[5/7] ring-1 ring-white/50"
             />
             <div className="absolute flex items-center gap-1 m-4 bg-white/30 backdrop-blur-3xl text-white  rounded-full font-semibold p-2 px-3 h-8 max-w-max">
               <svg
@@ -29,47 +30,47 @@ class AnimeCard extends Component {
                   clipRule="evenodd"
                 />
               </svg>
-              {(this.props.Anime.rating / 10).toFixed(1)}
+              {(this.props.Anime?.rating / 10).toFixed(1)}
             </div>
             <div className="p-2">
               <h1 className="font-bold text-lg truncate">
-                {this.props.Anime.title.english}
+                {this.props.Anime?.title.english}
               </h1>
-              <div className="flex gap-1 font-semibold text-gray-600">
-                <p>Ep {this.props.Anime.totalEpisodes}</p>
-                <DotIcon Dark="true" />
-                <p>{this.props.Anime.status}</p>
-                <DotIcon Dark="true" />
-                <p>{this.props.Anime.releaseDate}</p>
+              <div className="flex gap-1 font-semibold text-neutral-600">
+                <p>Ep {this.props.Anime?.totalEpisodes}</p>
+                <DotIcon />
+                <p>{this.props.Anime?.status}</p>
+                <DotIcon />
+                <p>{this.props.Anime?.releaseDate}</p>
               </div>
             </div>
-          </div>
-          <div className="absolute z-10 left-1/3 top-1/3 w-96 hidden flex-col gap-4 text-white backdrop-blur-lg bg-black/80 transition-all duration-700 ease-in-out group-hover:flex p-5 ring-1 ring-white">
+          </motion.div>
+          <div className="absolute z-10 left-1/3 top-1/3 w-96 hidden flex-col gap-4 text-white backdrop-blur-lg bg-black/80 transition-all duration-700 ease-in-out p-5 ring-1 ring-white">
             <div className="flex flex-col gap-1">
               <h1 className="font-bold text-lg">
-                {this.props.Anime.title.english}
+                {this.props.Anime?.title.english}
               </h1>
               <div className="flex gap-1 font-semibold ">
-                <p>Ep {this.props.Anime.totalEpisodes}</p>
+                <p>Ep {this.props.Anime?.totalEpisodes}</p>
                 <DotIcon />
-                <p>{this.props.Anime.duration}m</p>
+                <p>{this.props.Anime?.duration}m</p>
                 <DotIcon />
-                <p>{this.props.Anime.status}</p>
+                <p>{this.props.Anime?.status}</p>
                 <DotIcon />
-                <p>{this.props.Anime.releaseDate}</p>
+                <p>{this.props.Anime?.releaseDate}</p>
               </div>
               <div className="flex gap-2 text-white/60">
-                {this.props.Anime.genres.map((genre) => (
+                {this.props.Anime?.genres?.map((genre) => (
                   <p key={genre}>{genre}</p>
                 ))}
               </div>
               <p className="line-clamp-6 text-white/90">
-                {RemoveHTMLTags(this.props.Anime.description)}
+                {RemoveHTMLTags(this.props.Anime?.description)}
               </p>
             </div>
             <div className="flex gap-2">
               <a
-                href={"/anime/" + this.props.Anime.id}
+                href={"/anime/" + this.props.Anime?.id}
                 className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
               >
                 <svg
@@ -84,7 +85,7 @@ class AnimeCard extends Component {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className='text-sm'>Watch Now</p>
+                <p className="text-sm">Watch Now</p>
               </a>
               <button className="ring-1 ring-white p-3 backdrop-blur bg-white/20 hover:bg-white/40">
                 <svg
@@ -102,7 +103,7 @@ class AnimeCard extends Component {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </>
     );
   }

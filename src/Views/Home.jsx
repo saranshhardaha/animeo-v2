@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import AnimeCardsScroll from "../Components/AnimeCardsScroll";
-import Carousel from "../Components/Carousel";
-import HomeBanner from "../Components/HomeBanner";
-import { GetTrendingAnimes, GetPopularAnimes } from "../Utils/DBServices";
+import AnimeCardsScroll from "Components/AnimeCardsScroll";
+import Carousel from "Components/Carousel";
+import { GetTrendingAnimes, GetPopularAnimes } from "Utils/DBServices";
+import OverlaySearch from "Components/OverlaySearch";
 function Home() {
-  const [Response, setResponse] = useState({
-    popular: [],
-    trending: [],
-  });
+  const [response, setResponse] = useState(null);
 
   useEffect(() => {
     async function FetchResults() {
@@ -21,15 +18,16 @@ function Home() {
     FetchResults();
   }, []);
   return (
-    <main
-      className="h-full min-h-screen max-w-[1440px] mx-auto flex flex-col gap-2"
-    >
-      <Carousel Animes={Response.trending} />
-      <AnimeCardsScroll Title="Popular animes" Animes={Response.popular} />
-      {/* Categories */}
+    <>
+      <OverlaySearch />
+      <main className="h-full max-w-[1440px] mx-auto flex flex-col gap-2">
+        <Carousel Animes={response?.trending} />
+        {/* Categories */}
 
-      {/* Popular/Trending/Recommened */}
-    </main>
+        {/* Popular/Trending/Recommened */}
+      </main>
+      <AnimeCardsScroll Title="Popular animes" Animes={response?.popular} />
+    </>
   );
 }
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { GetEpisodeDetails } from "../Utils/DBServices";
+import { GetEpisodeDetails } from "Utils/DBServices";
 import { useParams } from "react-router-dom";
-import VideoPlayer from "../Components/VideoPlayer";
 import ReactPlayer from "react-player/lazy";
 
 function Watch() {
@@ -16,7 +15,7 @@ function Watch() {
       },
     ],
   });
-  const [Response, setResponse] = useState({
+  const [response, setResponse] = useState({
     sources: [
       { url: "String", type: "", isM3U8: "Boolean", quality: "String" },
     ],
@@ -35,7 +34,7 @@ function Watch() {
       }));
     }
     FetchResults();
-  }, []);
+  }, [episodeID]);
   return (
     <>
       <div>
