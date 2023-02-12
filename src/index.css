@@ -18,3 +18,6 @@
   scrollbar-width: none;
   /* Firefox */
 }
+.bg-custom{
+  background:radial-gradient(61.04% 89.69% at 100% 100%,rgba(200,250,255,.08) 0%,rgba(28,210,229,.08) 40.63%,rgba(28,210,229,0) 100%),radial-gradient(43.78% 64.34% at 60.31% 100%,rgba(23,74,228,.08) 0%,rgba(23,74,228,0) 100%),linear-gradient(180deg,rgba(23,74,228,0) 29.44%,rgba(23,74,228,.06) 100%),linear-gradient(90deg,#f3f3f7 0%,#ebf0f9 100%);
+}

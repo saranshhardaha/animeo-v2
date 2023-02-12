@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GetEpisodeDetails } from "Utils/DBServices";
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player/lazy";
+import VideoPlayer  from "Components/VideoPlayer";
 
 function Watch() {
   const { episodeID } = useParams();
@@ -38,10 +39,8 @@ function Watch() {
   return (
     <>
       <div>
-        <ReactPlayer
-          playing={true}
-          controls={true}
-          url={VideoOptions.sources[0].src}
+        <VideoPlayer
+          src={VideoOptions.sources[0].src}
         />
       </div>
     </>
