@@ -18,11 +18,11 @@ export default function Carousel(props) {
     const slider = document.getElementById("sliderContent");
     if (slider.onmouseover) return;
     const slideWidth = document.getElementsByClassName("slide")[0].clientHeight;
-    if (action === "DOWN" && slider.scrollTop === slider.clientHeight * 19) {
+    if (action === "DOWN" && slider.scrollTop === slider.clientHeight * 9) {
       slider.scrollTop = 0;
       return;
     } else if (action === "UP" && slider.scrollTop === 0) {
-      slider.scrollTop = slider.clientHeight * 19;
+      slider.scrollTop = slider.clientHeight * 9;
       return;
     }
     if (action === "DOWN") slider.scrollTop += slideWidth;
@@ -140,12 +140,12 @@ export default function Carousel(props) {
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 text-sm">
                   <a
                     href={"/anime/" + ani?.id}
                     className="flex items-center rounded gap-2 px-4 p-3 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                   >
-                    <Icon.Play fill="#fff" />
+                    <Icon.Play fill="#fff" size={16} />
                     <p>Watch Now</p>
                   </a>
                   <a
@@ -153,7 +153,7 @@ export default function Carousel(props) {
                     className="flex items-center rounded gap-2 px-4 p-3 pr-2 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                   >
                     <p>Details</p>
-                    <Icon.ChevronRight />
+                    <Icon.ChevronRight size={16} />
                   </a>
                 </div>
               </div>

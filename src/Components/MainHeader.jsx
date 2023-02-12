@@ -12,15 +12,15 @@ class Header extends Component {
   }
   render() {
     return (
-      <motion.div className="hidden fixed md:flex items-center z-20 top-0 bg-transparent h-16 w-full">
-        <div className="flex justify-between items-center h-full gap-2 px-4 text-white w-full bg-black/70 backdrop-blur-xl">
+      <motion.div className="hidden fixed md:flex items-center z-20 top-0 bg-transparent h-12 w-full">
+        <div className="flex justify-between items-center h-full gap-2 px-4 text-white text-sm w-full bg-black/70 backdrop-blur-xl">
           <div className="flex items-center gap-4 h-full">
             <a
               href="/"
               className="flex gap-1 items-center opacity-60 hover:opacity-100 group"
             >
-              <Icon.Droplet size={26} />
-              <p className="hidden group-hover:block">Animeo</p>
+              <Icon.Droplet size={20} />
+              <p>Animeo</p>
             </a>
             <motion.div
               initial={{ width: "8rem" }}
@@ -32,29 +32,29 @@ class Header extends Component {
               whileHover={{ width: "14rem" }}
               className="flex items-center w-full bg-white/5 pl-1 pr-3 rounded-full text-white group hover:bg-white/10 transition-all"
             >
-              <button className="p-2 opacity-50 group-focus-within:opacity-80">
-                <Icon.Search size={20} />
+              <button className="p-1 px-2 opacity-50 group-focus-within:opacity-80">
+                <Icon.Search size={16} />
               </button>
               <motion.input
                 type="text"
                 placeholder="Search"
-                className="p-2 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
+                className="p-2 pl-3 bg-transparent focus-visible:outline-none w-full transition-all text-sm"
               />
             </motion.div>
-            <motion.div className="flex items-center gap-2 rounded-full bg-white/10 p-1">
+            <motion.div className="flex items-center gap-2 rounded-full bg-white/5 p-1">
               <motion.div
-                className={`"flex p-2 px-6 transition-all tracking-wider cursor-pointer text-black rounded-full ${
+                className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
                   this.state.activeItem === "Animes"
-                    ? "bg-white/80 hover:bg-white font-semibold"
+                    ? "text-black bg-white/80 hover:bg-white font-semibold"
                     : "text-white opacity-50 hover:opacity-100"
                 } "`}
               >
                 Animes
               </motion.div>
               <motion.div
-                className={`"flex p-2 px-6 transition-all tracking-wider cursor-pointer text-black rounded-full ${
+                className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
                   this.state.activeItem === "Movies"
-                    ? "bg-white/80 hover:bg-white font-semibold"
+                    ? "text-black bg-white/80 hover:bg-white font-semibold"
                     : "text-white opacity-50 hover:opacity-100"
                 } "`}
               >
@@ -62,13 +62,13 @@ class Header extends Component {
               </motion.div>
 
               <motion.div
-                className={`"flex p-2 px-6 transition-all tracking-wider cursor-pointer text-black rounded-full ${
-                  this.state.activeItem === "Genres"
-                    ? "bg-white/80 hover:bg-white font-semibold"
+                className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
+                  this.state.activeItem === "Filter"
+                    ? "text-black bg-white/80 hover:bg-white font-semibold"
                     : "text-white opacity-50 hover:opacity-100"
                 } "`}
               >
-                Genres
+                Filter
               </motion.div>
             </motion.div>
           </div>
@@ -76,20 +76,31 @@ class Header extends Component {
             <button className="text-white opacity-50 hover:opacity-80 transition-all">
               <Icon.Bell size={20} fill="#fff" />
             </button>
-            <button
+            <motion.button
+              initial={{ width: "2.5rem" }}
+              transition={{
+                x: { duration: 1 },
+                ease: "linear",
+              }}
+              exit={{ width: "2.5rem" }}
+              whileHover={{
+                width: "10rem",
+              }}
               onClick={() =>
                 this.setState({ isSettingActive: !this.state.isSettingActive })
               }
-              className="flex items-center gap-3 rounded-full bg-white/10 p-2 px-3 pr-4 transition-all hover:bg-white/5"
+              className="flex items-center justify-between gap-3 rounded-full bg-white/10 p-1 transition-all overflow-hidden hover:bg-white/5"
             >
               <img
                 alt="Profile_picture"
                 src="https://placekitten.com/32/32"
                 className="h-8 w-8 rounded-full bg-white"
               />
-              <div className="font-bold">Saransh</div>
-              <Icon.ChevronDown size={12} />
-            </button>
+              <div className="font-semibold truncate max-w-[7rem]">Saransh</div>
+              <div className="pr-3">
+                <Icon.ChevronDown size={12} />
+              </div>
+            </motion.button>
             <AnimatePresence>
               {this.state.isSettingActive && (
                 <motion.div
@@ -111,7 +122,7 @@ class Header extends Component {
                   }}
                   transition={{ duration: 0.5 }}
                   style={{ pointerEvents: "auto" }}
-                  className="fixed z-0 top-16 right-4 h-auto w-40 rounded-b-md bg-black/90 backdrop-blur-xl"
+                  className="fixed z-0 top-12 right-4 h-auto w-40 rounded-b-md bg-black/90 backdrop-blur-xl"
                 >
                   <div className="flex flex-col items-center justify-center w-full">
                     <button className="flex items-center justify-between font-semibold gap-2 w-full hover:bg-white/5 transition-all px-6 py-3">

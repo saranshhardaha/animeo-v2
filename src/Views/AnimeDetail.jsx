@@ -9,13 +9,29 @@ function AnimeDetail() {
   const { animeId } = useParams();
   const navigation = useNavigate();
   const [response, setResponse] = useState(null);
+  const [episodes, setEpisodes] = useState(null);
   useEffect(() => {
     async function FetchResults() {
       let details = await GetAnimeDetails(animeId);
       setResponse(details);
+      setEpisodes(details?.episodes);
     }
     FetchResults();
   }, [animeId]);
+
+  const filterEpisodes = (e) => {
+    const value = new RegExp(e.target.value, "gi");
+    console.log(value);
+    if (value === null || value === "") {
+      setEpisodes(response?.episodes);
+    } else {
+      setEpisodes(
+        response?.episodes?.filter(
+          (x) => x?.title?.match(value) || x?.number?.toString().match(value)
+        )
+      );
+    }
+  };
 
   return (
     <>
@@ -29,7 +45,10 @@ function AnimeDetail() {
           <img
             src={response?.cover}
             alt=""
-            className="min-h-[12rem] h-full max-h-80 object-cover w-full"
+            className={
+              "min-h-[20rem] h-full max-h-96 transition-all object-cover w-full bg-white/10 " +
+              (response === null ? "animate-pulse h-72" : "")
+            }
           />
           <div className="flex w-full">
             <div className="flex flex-col md:flex-row backdrop-blur-md mx-auto text-white bg-black/30 w-full h-full">
@@ -40,7 +59,7 @@ function AnimeDetail() {
                       src={response?.image}
                       alt=""
                       className={
-                        "bg-white/40 w-44 lg:w-96 h-auto aspect-[3/4] ring-2 ring-white/30 object-cover rounded" +
+                        "bg-white/10 w-44 lg:w-96 h-auto aspect-[3/4] ring-2 ring-white/20 object-cover rounded " +
                         (response?.image === null ? "animate-pulse" : "")
                       }
                     />
@@ -78,13 +97,13 @@ function AnimeDetail() {
                   </div>
                   <div className="flex gap-2 max-w-max">
                     <a
-                      href={"/watch/" + response?.episodes[0].id}
-                      className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
+                      href={"/watch/" + response?.episodes[0]?.id}
+                      className="flex items-center rounded gap-2 px-4 p-3 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                     >
-                      <Icon.Play />
-                      <p className="text-sm">Watch Now</p>
+                      <Icon.Play fill="#fff" />
+                      <p>Watch Now</p>
                     </a>
-                    <button className="ring-1 ring-white p-3 backdrop-blur bg-white/20 hover:bg-white/40">
+                    <button className="flex items-center rounded gap-2 px-4 p-3 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all">
                       <Icon.Star />
                     </button>
                   </div>
@@ -92,10 +111,8 @@ function AnimeDetail() {
                 <div className="flex flex-col shrink bg-black/20 h-full gap-2 p-4 py-8 w-full lg:max-w-[26rem]">
                   <div className="flex gap-1">
                     <p className="flex text-white/60">Synonyms: </p>
-                    <div className="font-semibold h-10 overflow-hidden">
-                      {response?.synonyms?.map((syn) => (
-                        <p key={syn}>{syn}</p>
-                      ))}
+                    <div className="font-semibold overflow-hidden truncate">
+                      {response?.synonyms?.map((x) => x)}
                     </div>
                   </div>
                   <div className="flex items-center gap-1 w-full truncate">
@@ -154,13 +171,14 @@ function AnimeDetail() {
               </button>
               <input
                 type="text"
+                onChange={filterEpisodes}
                 placeholder="Search"
                 className="p-2 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
               />
             </div>
           </div>
           <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto scrollbar-hide">
-            {response?.episodes?.map((ep) => (
+            {episodes?.map((ep) => (
               <a
                 href={"/watch/" + ep.id}
                 key={ep.id}

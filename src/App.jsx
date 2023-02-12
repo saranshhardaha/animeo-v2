@@ -11,7 +11,7 @@ function App() {
     <div className="App font-manrope bg-[#000] text-white">
       <AnimateSharedLayout type="crossfade">
         <MainHeader />
-        <div className="pb-10 md:py-0 md:pt-16">
+        <div className="pb-10 md:py-0">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />

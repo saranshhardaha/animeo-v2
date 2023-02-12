@@ -31,7 +31,7 @@ class FooterMenu extends Component {
                 exit={{ opacity: 0, transition: { duration: 0.5 } }}
                 transition={{ duration: 0.5 }}
                 style={{ pointerEvents: "auto" }}
-                className="fixed flex flex-col gap-4 bottom-10 left-0 h-auto px-4 py-5 w-full backdrop-blur-2xl bg-black"
+                className="fixed flex flex-col gap-4 bottom-10 left-0 h-auto px-4 py-5 w-full backdrop-blur-2xl bg-black/90"
               >
                 <div className="flex items-center w-full bg-white/5 pl-1 pr-3 rounded-full text-white group hover:bg-white/10 transition-all max-w-[32rem] mx-auto">
                   <button className="p-2 opacity-50 group-focus-within:opacity-80">
@@ -56,7 +56,7 @@ class FooterMenu extends Component {
                         isSettingActive: !this.state.isSettingActive,
                       })
                     }
-                    className="flex items-center gap-3 rounded-full bg-white/5 p-1 transition-all hover:bg-white/10"
+                    className="flex items-center px-6 py-3 transition-all hover:bg-white/5"
                   >
                     <img
                       alt="Profile_picture"

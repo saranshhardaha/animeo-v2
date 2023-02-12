@@ -68,10 +68,10 @@ export default class AnimeCardsScroll extends Component {
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
               transition={{ duration: 0.2, delay: 0.15 }}
               style={{ pointerEvents: "auto" }}
-              className="fixed  z-20 grid place-items-center top-0 left-0 p-2 w-full h-full bg-black/80"
+              className="fixed z-20 grid place-items-center top-0 left-0 p-2 w-full h-full bg-black/80"
             >
               <motion.div
-                className="flex flex-col relative max-w-[50rem] w-full bg-black/20 ring-1 ring-white/40 backdrop-blur-xl m-2 text-white"
+                className="flex flex-col relative max-w-[50rem] w-full bg-black/20 rounded ring-2 ring-white/30 backdrop-blur-xl m-2 text-white"
                 layoutId={this.state.selectedAnime?.id}
               >
                 <div className="absolute top-2 right-2 flex justify-end items-center w-full">
