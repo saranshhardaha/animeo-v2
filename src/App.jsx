@@ -16,7 +16,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/anime/:animeId" element={<AnimeDetail />} />
-              <Route path="/watch/:episodeID" element={<Watch />} />
+              <Route path="/watch/:animeId/:episodeID" element={<Watch />} />
             </Routes>
           </BrowserRouter>
         </div>

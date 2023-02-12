@@ -14,10 +14,10 @@ export default function VideoPlayer({ sources }) {
     currentDuration: 0.0,
   };
   return (
-    <div className="relative h-full w-max video-js">
+    <div className="relative h-full w-full video-js">
       <video
         id="my-video"
-        className="video-js vjs-default-skin vjs-big-play-centered min-h-[420px]"
+        className="video-js vjs-default-skin vjs-big-play-centered h-full w-full"
         controls={true}
         autoPlay={true}
         muted={true}

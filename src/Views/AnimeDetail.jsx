@@ -97,7 +97,12 @@ function AnimeDetail() {
                   </div>
                   <div className="flex gap-2 max-w-max">
                     <a
-                      href={"/watch/" + response?.episodes[0]?.id}
+                      href={
+                        "/watch/" +
+                        response?.id +
+                        "/" +
+                        response?.episodes[0]?.id
+                      }
                       className="flex items-center rounded gap-2 px-4 p-3 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                     >
                       <Icon.Play fill="#fff" />
@@ -166,21 +171,21 @@ function AnimeDetail() {
           <div className="flex items-center justify-between text-white">
             <h2 className="py-2 px-1 text-xl font-bold">Episodes</h2>
             <div className="flex gap-1 p-1 px-2 items-center rounded-full bg-white/5 hover:bg-white/10">
-              <button className="p-2 opacity-50 group-focus-within:opacity-80">
+              <button className="p-1 opacity-50 group-focus-within:opacity-80">
                 <Icon.Search size={20} />
               </button>
               <input
                 type="text"
                 onChange={filterEpisodes}
                 placeholder="Search"
-                className="p-2 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
+                className="p-1 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
               />
             </div>
           </div>
           <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto scrollbar-hide">
             {episodes?.map((ep) => (
               <a
-                href={"/watch/" + ep.id}
+                href={"/watch/" + response?.id + "/" + ep.id}
                 key={ep.id}
                 className="flex gap-2 text-sm py-2 md:px-4 hover:bg-white/5"
               >
