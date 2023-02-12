@@ -5,6 +5,8 @@
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
     "axios": "^1.2.6",
+    "buffer": "^6.0.3",
+    "fluid-player": "^3.12.0",
     "framer-motion": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

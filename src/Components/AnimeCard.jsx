@@ -10,14 +10,17 @@ class AnimeCard extends Component {
       <>
         <motion.div
           key={this.props.Anime?.id}
-          className="flex flex-col relative max-w-[270px] group "
+          className="flex flex-col relative w-full group "
         >
-          <motion.div className="flex flex-col h-full relative">
+          <motion.div className="flex flex-col h-full relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden ring-2 ring-white/5 hover:ring-white/30">
             <img
               src={this.props.Anime?.image}
               alt={this.props.Anime?.title.english}
-              className="w-full h-auto bg-black aspect-[5/7] ring-1 ring-white/50"
+              className="w-full h-auto bg-black aspect-[5/7] ring-1 rounded"
             />
+            {this.props.Anime == null && (
+              <div className="h-full w-full bg-white animate-pulse"></div>
+            )}
             <div className="absolute flex flex-col h-full w-full items-start justify-between gap-1">
               <div className="flex items-center gap-1 text-sm bg-white/30 backdrop-blur-3xl text-white  rounded-full m-2 font-semibold p-2 px-2 h-8 max-w-max">
                 <Star height="0.75rem" width="0.75rem" fill="#fff" />

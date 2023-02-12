@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { GetAnimeDetails } from "Utils/DBServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RemoveHTMLTags } from "Utils/Utils";
 import DotIcon from "Components/DotIcon";
 import AnimeCardsScroll from "Components/AnimeCardsScroll";
-import { Search } from "react-feather";
+import * as Icon from "react-feather";
 function AnimeDetail() {
   const { animeId } = useParams();
+  const navigation = useNavigate();
   const [response, setResponse] = useState(null);
   useEffect(() => {
     async function FetchResults() {
@@ -31,7 +32,7 @@ function AnimeDetail() {
             className="min-h-[12rem] h-full max-h-80 object-cover w-full"
           />
           <div className="flex w-full">
-            <div className="flex flex-col md:flex-row backdrop-blur-md mx-auto text-white ring-1 ring-white/20 bg-black/30 w-full h-full">
+            <div className="flex flex-col md:flex-row backdrop-blur-md mx-auto text-white bg-black/30 w-full h-full">
               <div className="flex flex-col lg:flex-row grow gap-8 mx-auto w-full p-4 max-w-[1200px]">
                 <div className="flex flex-col items-center -mt-20 sm:-mt-32 lg:m-0">
                   <div className=" bg-black">
@@ -39,7 +40,7 @@ function AnimeDetail() {
                       src={response?.image}
                       alt=""
                       className={
-                        "bg-white/40 w-36 lg:w-96 h-auto aspect-[3/4] ring-1 ring-white object-cover" +
+                        "bg-white/40 w-44 lg:w-96 h-auto aspect-[3/4] ring-2 ring-white/30 object-cover rounded" +
                         (response?.image === null ? "animate-pulse" : "")
                       }
                     />
@@ -77,36 +78,14 @@ function AnimeDetail() {
                   </div>
                   <div className="flex gap-2 max-w-max">
                     <a
-                      href={"/watch/" + response?.id}
+                      href={"/watch/" + response?.episodes[0].id}
                       className="flex items-center gap-2 ring-1 ring-white p-2 backdrop-blur bg-white/20 hover:bg-white/40"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <Icon.Play />
                       <p className="text-sm">Watch Now</p>
                     </a>
                     <button className="ring-1 ring-white p-3 backdrop-blur bg-white/20 hover:bg-white/40">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-4 h-4"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <Icon.Star />
                     </button>
                   </div>
                 </div>
@@ -141,7 +120,7 @@ function AnimeDetail() {
                     <span className="text-white/60">Genres: </span>
                     <div className="flex flex-wrap gap-2 text-white font-semibold truncate w-full">
                       {response?.genres?.map((genre) => (
-                        <span>{genre}</span>
+                        <span key={genre}>{genre}</span>
                       ))}
                     </div>
                   </div>
@@ -169,15 +148,18 @@ function AnimeDetail() {
         <div className="flex flex-col gap-3 p-4 max-w-[1200px] w-full mx-auto">
           <div className="flex items-center justify-between text-white">
             <h2 className="py-2 px-1 text-xl font-bold">Episodes</h2>
-            <div className="flex gap-1 p-1 px-2 items-center ring-1 bg-black/10 ring-white/80 backdrop-blur">
-              <Search size="1rem" />
+            <div className="flex gap-1 p-1 px-2 items-center rounded-full bg-white/5 hover:bg-white/10">
+              <button className="p-2 opacity-50 group-focus-within:opacity-80">
+                <Icon.Search size={20} />
+              </button>
               <input
                 type="text"
-                className="px-2 w-full max-w-[14rem] bg-transparent border-0"
+                placeholder="Search"
+                className="p-2 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
               />
             </div>
           </div>
-          <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto">
+          <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto scrollbar-hide">
             {response?.episodes?.map((ep) => (
               <a
                 href={"/watch/" + ep.id}
@@ -203,20 +185,19 @@ function AnimeDetail() {
           <div className="flex items-center justify-between text-white">
             <h2 className="py-2 px-1 text-xl font-bold">Characters</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-center p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur ">
+          <div className="flex p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur scrollbar-hide">
             {response?.characters?.map((char) => (
-              <div className="flex gap-3 p-2 w-full" key={char.id}>
+              <div className="flex flex-col gap-3 p-2 w-full" key={char.id}>
                 <img
                   src={char?.image}
                   alt="test"
-                  className="ring-1 ring-white/70 object-cover aspect-[3/4] w-20 h-full"
+                  className="rounded-full object-cover aspect-square min-w-[7rem] h-28"
                 />
-                <div className="flex flex-col gap-1 text-white/70 text-sm">
-                  <p className="text-lg text-white font-semibold">
+                <div className="flex flex-col items-center gap-1 text-white/70 text-sm">
+                  <p className="text-sm text-white font-semibold truncate">
                     {char.name.full}
                   </p>
-                  <p>Role: {char?.role}</p>
-                  <p>Voice: {char?.voiceActors[0]?.name?.full}</p>
+                  <p>{char?.role}</p>
                 </div>
               </div>
             ))}
@@ -224,7 +205,9 @@ function AnimeDetail() {
         </div>
         <AnimeCardsScroll
           Title="Recommendations"
-          Animes={response?.recommendations}
+          Recommendations={true}
+          Navigation={navigation}
+          Animes={response?.recommendations?.slice(0, 8)}
         />
       </section>
     </>

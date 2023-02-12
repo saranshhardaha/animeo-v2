@@ -15,7 +15,7 @@ export async function GetTrendingAnimes(PageNo = 1) {
   const ReqURL = BaseURL + "meta/anilist/trending";
   const Params = {
     page: PageNo,
-    perPage: 20,
+    perPage: 10,
   };
   return GetDataFromURL(ReqURL, Params);
 }
@@ -23,7 +23,7 @@ export async function GetPopularAnimes(PageNo = 1) {
   const ReqURL = BaseURL + "meta/anilist/popular";
   const Params = {
     page: PageNo,
-    perPage: 20,
+    perPage: 12,
   };
   return GetDataFromURL(ReqURL, Params);
 }

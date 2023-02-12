@@ -19,5 +19,6 @@
   /* Firefox */
 }
 .bg-custom{
-  background:radial-gradient(61.04% 89.69% at 100% 100%,rgba(200,250,255,.08) 0%,rgba(28,210,229,.08) 40.63%,rgba(28,210,229,0) 100%),radial-gradient(43.78% 64.34% at 60.31% 100%,rgba(23,74,228,.08) 0%,rgba(23,74,228,0) 100%),linear-gradient(180deg,rgba(23,74,228,0) 29.44%,rgba(23,74,228,.06) 100%),linear-gradient(90deg,#f3f3f7 0%,#ebf0f9 100%);
+  /* background:radial-gradient(61.04% 89.69% at 100% 100%,rgba(200,250,255,.08) 0%,rgba(28,210,229,.08) 40.63%,rgba(28,210,229,0) 100%),radial-gradient(43.78% 64.34% at 60.31% 100%,rgba(23,74,228,.08) 0%,rgba(23,74,228,0) 100%),linear-gradient(180deg,rgba(23,74,228,0) 29.44%,rgba(23,74,228,.06) 100%),linear-gradient(90deg,#f3f3f7 0%,#ebf0f9 100%); */
+  background-image: linear-gradient(to right bottom, #151515, #161616, #161616, #171717, #171717, #181818, #181818, #191919, #1b1b1b, #1c1c1c, #1e1e1e, #202020);
 }

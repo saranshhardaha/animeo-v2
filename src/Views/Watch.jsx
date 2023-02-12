@@ -12,7 +12,7 @@ function Watch() {
     sources: [
       {
         src: "https://playgo1.cc/embedplus?id=MTk3MzU1&token=YRx1CF1M4KczfHUDVJytUQ&expires=1675279249",
-        type: "video/mp4",
+        type: "application/x-mpegURL",
       },
     ],
   });

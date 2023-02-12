@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "Components/Header";
+import FooterMenu from "Components/Header";
 import MainHeader from "Components/MainHeader";
 import AnimeDetail from "Views/AnimeDetail";
 import Home from "Views/Home";
@@ -8,10 +8,10 @@ import { AnimateSharedLayout } from "framer-motion";
 
 function App() {
   return (
-    <div className="App font-manrope bg-custom text-black">
+    <div className="App font-manrope bg-[#000] text-white">
       <AnimateSharedLayout type="crossfade">
         <MainHeader />
-        <div className="pb-10">
+        <div className="pb-10 md:py-0 md:pt-16">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -20,7 +20,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-        <Header />
+        <FooterMenu />
       </AnimateSharedLayout>
     </div>
   );

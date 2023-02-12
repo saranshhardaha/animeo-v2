@@ -4,9 +4,6 @@ import "fluid-player/src/css/fluidplayer.css";
 
 export default function VideoPlayer() {
   const player = fluidPlayer("#example-player");
-
-  
-
   return (
     <div className="App">
       <h1>fluidPlayer</h1>

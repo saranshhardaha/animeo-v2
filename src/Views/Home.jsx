@@ -20,7 +20,7 @@ function Home() {
   return (
     <>
       <OverlaySearch />
-      <main className="h-full max-w-[1200px] mx-auto flex flex-col gap-2">
+      <main className="h-full flex flex-col gap-2">
         <Carousel Animes={response?.trending} />
         {/* Categories */}
 
@@ -28,7 +28,7 @@ function Home() {
       </main>
       <AnimeCardsScroll
         Title="Popular animes"
-        DarkTitle={true}
+        DarkTitle={false}
         Animes={response?.popular}
       />
     </>
