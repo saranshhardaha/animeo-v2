@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { RemoveHTMLTags } from "Utils/Utils";
+import * as Icon from "react-feather";
 import DotIcon from "Components/DotIcon";
 import { ChevronDown, ChevronUp, Clock, Play, Star } from "react-feather";
 
@@ -17,11 +18,11 @@ export default function Carousel(props) {
     const slider = document.getElementById("sliderContent");
     if (slider.onmouseover) return;
     const slideWidth = document.getElementsByClassName("slide")[0].clientHeight;
-    if (action === "DOWN" && slider.scrollTop === slider.clientHeight * 19) {
+    if (action === "DOWN" && slider.scrollTop === slider.clientHeight * 9) {
       slider.scrollTop = 0;
       return;
     } else if (action === "UP" && slider.scrollTop === 0) {
-      slider.scrollTop = slider.clientHeight * 19;
+      slider.scrollTop = slider.clientHeight * 9;
       return;
     }
     if (action === "DOWN") slider.scrollTop += slideWidth;
@@ -30,7 +31,7 @@ export default function Carousel(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       Slide("DOWN");
-    }, 4500);
+    }, 6000);
 
     return () => clearInterval(interval);
   });
@@ -40,7 +41,7 @@ export default function Carousel(props) {
       <section className="relative overflow-hidden w-full h-96">
         <div className="absolute bottom-0 right-0 z-10 md:flex flex-col gap-2 m-8 hidden ">
           <button
-            className="bg-white/10 p-2 backdrop-blur ring-1 ring-white/50 hover:bg-white/30 text-white"
+            className="bg-white/10 grid place-items-center transition-all rounded p-2 backdrop-blur-xl  hover:bg-white/20 text-white"
             id="slide-arrow-up"
             onClick={() => Slide("UP")}
           >
@@ -48,7 +49,7 @@ export default function Carousel(props) {
           </button>
 
           <button
-            className="bg-white/10 p-2 backdrop-blur ring-1 ring-white/50 hover:bg-white/30 text-white"
+            className="bg-white/10 grid place-items-center transition-all rounded p-2 backdrop-blur-xl  hover:bg-white/20 text-white"
             id="slide-arrow-down"
             onClick={() => Slide("DOWN")}
           >
@@ -58,8 +59,14 @@ export default function Carousel(props) {
 
         <div
           id="sliderContent"
-          className="flex flex-col w-full h-full snap-y snap-mandatory overflow-auto scroll-smooth transition-all  scrollbar-hide"
+          className="flex flex-col w-full h-full snap-y snap-mandatory overflow-auto scroll-smooth transition-all scrollbar-hide"
         >
+          {props?.Animes == null &&
+            Array.from(Array(10), (e, i) => {
+              return (
+                <div className="h-96 w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"></div>
+              );
+            })}
           {props.Animes?.map((ani, key) => (
             <div
               key={key}
@@ -85,7 +92,7 @@ export default function Carousel(props) {
                   </div>
                   <div className="flex flex-col gap-1">
                     <div className=" flex items-center gap-1 bg-white/10 backdrop-blur-lg text-white text-sm rounded-full font-semibold p-2 px-3 h-8 max-w-min">
-                      <Star size={"0.75rem"} fill="#fff"/>
+                      <Star size={"0.75rem"} fill="#fff" />
                       {(ani?.rating / 10).toFixed(1)}
                     </div>
                     <h2 className="font-bold text-lg md:text-xl line-clamp-1">
@@ -95,12 +102,12 @@ export default function Carousel(props) {
                       <p>Ep {ani?.totalEpisodes}</p>
                       <DotIcon />
                       <div className="flex items-center gap-1">
-                        <Clock size={"0.75rem"}/>
+                        <Clock size={"0.75rem"} />
                         <p>{ani?.duration}m</p>
                       </div>
                       <DotIcon />
                       <div className=" items-center gap-1 hidden md:flex">
-                        <Play fill="#fff" size={"0.75rem"}/>
+                        <Play fill="#fff" size={"0.75rem"} />
                         <p>{ani?.type}</p>
                       </div>
                       <DotIcon />
@@ -128,49 +135,25 @@ export default function Carousel(props) {
                         <p key={genre}>{genre}</p>
                       ))}
                     </div>
-                    <p className="line-clamp-3 text-sm md:text-base text-white/70">
+                    <p className="line-clamp-2 text-sm md:text-base text-white/70">
                       {RemoveHTMLTags(ani?.description)}
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 text-sm">
                   <a
-                    href={"watch/" + ani?.episodes?.[0]?.id}
-                    className="flex items-center gap-2 px-4 p-2 bg-white/10 backdrop-blur-sm max-w-max ring-1 ring-white/50 hover:bg-white/20"
+                    href={"/anime/" + ani?.id}
+                    className="flex items-center rounded gap-2 px-4 p-3 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <Icon.Play fill="#fff" size={16} />
                     <p>Watch Now</p>
                   </a>
                   <a
                     href={"/anime/" + ani?.id}
-                    className="flex items-center gap-2 leading-3 px-4 p-2 bg-white/10 backdrop-blur-sm max-w-max ring-1 ring-white/20 hover:bg-white/20"
+                    className="flex items-center rounded gap-2 px-4 p-3 pr-2 bg-white/10 backdrop-blur max-w-max hover:bg-white/20 transition-all"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-5 h-5 text-white/80"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                      />
-                    </svg>
-                    <p>Detail</p>
+                    <p>Details</p>
+                    <Icon.ChevronRight size={16} />
                   </a>
                 </div>
               </div>
