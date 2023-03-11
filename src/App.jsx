@@ -4,6 +4,7 @@ import Footer from "Components/Sections/Footer";
 import AnimeDetail from "Views/AnimeDetail";
 import Home from "Views/Home";
 import Watch from "Views/Watch";
+import Genres from "Views/Genres";
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/anime/:animeId" element={<AnimeDetail />} />
+            <Route path="/genre/:genre/" element={<Genres />} />
             <Route path="/watch/:animeId/:episodeID" element={<Watch />} />
           </Routes>
         </BrowserRouter>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

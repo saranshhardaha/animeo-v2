@@ -3,24 +3,31 @@ import CardsScroll from "../Components/Sections/CardsScroll";
 // import Carousel from "Components/Carousel";
 import AiringSchedule from "Components/Sections/AiringSchedule";
 import GenreSelect from "Components/Sections/GenreSelect";
-import { IAnimeResult, ISearch, META } from '@consumet/extensions';
-
+import { IAnimeResult, ISearch, META } from "@consumet/extensions";
+import { fetchPopular } from "Utils/DBServices";
 // <providerName> is the name of the provider you want to use. list of the proivders is below.
 const anilist = new META.Anilist();
 // import OverlaySearch from "Components/OverlaySearch";\
 
 function Home() {
-  const [popularAnimes, setPopularAnimes] = useState<ISearch<IAnimeResult> | undefined>();
-  const [trendingAnimes, setTrendingAnimes] = useState<ISearch<IAnimeResult> | undefined>();
+  const [popularAnimes, setPopularAnimes] = useState<
+    ISearch<IAnimeResult> | undefined
+  >();
+  const [trendingAnimes, setTrendingAnimes] = useState<
+    ISearch<IAnimeResult> | undefined
+  >();
+  const [animes, setAnimes] = useState<[] | undefined>();
   const isLoggedIn = false;
   useEffect(() => {
     async function FetchResults() {
-      await anilist.fetchPopularAnime().then(data => {
-        setPopularAnimes(data)
-      })
-      await anilist.fetchTrendingAnime().then(data => {
-        setTrendingAnimes(data)
-      })
+      await anilist.fetchPopularAnime().then((data) => {
+        setPopularAnimes(data);
+      });
+      await anilist.fetchTrendingAnime().then((data) => {
+        setTrendingAnimes(data);
+      });
+      var test = await fetchPopular();
+      setAnimes(test.data);
     }
     FetchResults();
   }, []);
@@ -35,23 +42,30 @@ function Home() {
           Dark={false}
           Animes={trendingAnimes?.results}
         />
-        {isLoggedIn &&
-          (<CardsScroll
+        {isLoggedIn && (
+          <CardsScroll
             Title="Continue watching"
             Dark={false}
             IsVertical={false}
             ShowAllButton={false}
-          Animes={trendingAnimes?.results}
-          />)}
+            Animes={trendingAnimes?.results}
+          />
+        )}
         <CardsScroll
           Title="Popular animes"
           Dark={false}
           Animes={popularAnimes?.results}
         />
-        <AiringSchedule/>
+        <AiringSchedule />
         <GenreSelect />
+        {animes &&
+          animes?.map((anime: any) => (
+            <div>
+              {anime?.title?.english}
+              {anime?.slug}
+            </div>
+          ))}
       </main>
-
     </>
   );
 }

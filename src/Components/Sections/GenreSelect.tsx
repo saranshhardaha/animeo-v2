@@ -1,13 +1,22 @@
 import IconButton from "Components/Buttons/IconButton";
 import * as Icon from "react-feather";
 import React from "react";
-const GenreSelect = () => {
+type Props = {
+  center?: boolean;
+};
+const GenreSelect = ({ center = false }: Props) => {
   return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <p className="text-lg px-1">Genres</p>
-      </div>
-      <div className="flex items-center w-full gap-2 overflow-scroll scrollbar-hide">
+    <div
+      className={`flex flex-col gap-3 w-full ${
+        center ? "justify-center items-center" : ""
+      }`}
+    >
+      <p className="max-w-max text-lg px-1">Genres</p>
+      <div
+        className={`flex items-center w-full gap-2 overflow-scroll scrollbar-hide ${
+          center ? "2xl:justify-center" : ""
+        }`}
+      >
         <IconButton icon={<Icon.Crosshair />} text="Action" />
         <IconButton icon={<Icon.Compass />} text="Adventure" />
         <IconButton icon={<Icon.Heart />} text="Romance" />
@@ -24,7 +33,7 @@ const GenreSelect = () => {
         <IconButton icon={<Icon.Zap />} text="Sports" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default GenreSelect;

@@ -1,21 +1,25 @@
 import VideoPlayer from "../Components/VideoPlayer";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchEpisodes, fetchSource } from "Utils/DBServices";
 import * as Icon from "react-feather";
 //@ts-ignore
 import { RemoveHTMLTags } from "Utils/Utils";
 import CardsScroll from "Components/Sections/CardsScroll";
-import { IAnimeEpisode, IAnimeInfo, ISource, ITitle, META } from "@consumet/extensions";
+import { IAnimeEpisode, IAnimeInfo, ITitle, META } from "@consumet/extensions";
 
 const anilist = new META.Anilist();
 const Watch = () => {
   const { animeId, episodeID } = useParams();
   // const navigation = useNavigate();
-  let [showVideo, setShowVideo] = useState(false);
+  let [episode, setEpisode] = useState(null);
   let [anime, setAnime] = useState<IAnimeInfo | null>(null);
   const [episodes, setEpisodes] = useState<IAnimeEpisode[] | null>(null);
-
-  const [sources, setSources] = useState<ISource | null>(null);
+  const navigate = useNavigate();
+  const episodeChange = (ep: any) => {
+    setEpisode(null);
+    navigate(`/watch/${anime?.id}/${ep.number}`);
+  };
   const filterEpisodes = (e: any) => {
     const value = new RegExp(e.target.value, "gi");
     console.log(value);
@@ -32,20 +36,20 @@ const Watch = () => {
 
   useEffect(() => {
     async function FetchResults() {
-      setShowVideo(false);
       if (!animeId || !episodeID) return;
 
-      await anilist.fetchAnilistInfoById(animeId).then(data => {
+      await anilist.fetchAnilistInfoById(animeId).then((data) => {
         setAnime(data);
-      })
-      await anilist.fetchEpisodesListById(animeId).then(data => {
-        setEpisodes(data);
-      })
-      await anilist.fetchEpisodeSources(episodeID).then(data => {
-        console.log(data);
-        // setSources(data ?? null);
-      })
-      setShowVideo(true);
+      });
+      var ani = await fetchEpisodes(animeId);
+      setEpisodes(ani?.episodes);
+      if (ani) {
+        const episode = await (
+          await fetch(`https://api.enime.moe/view/${ani?.slug}/${episodeID}`)
+        ).json();
+        setEpisode(episode);
+        console.log(episode);
+      }
     }
     FetchResults();
   }, [animeId, episodeID]);
@@ -73,6 +77,7 @@ const Watch = () => {
                 <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[24rem] overflow-y-auto scrollbar-hide">
                   {episodes?.map((ep) => (
                     <button
+                      onClick={() => episodeChange(ep)}
                       key={ep.id}
                       className="flex gap-2 text-sm py-2 md:px-2 hover:bg-white/5"
                     >
@@ -89,8 +94,11 @@ const Watch = () => {
                 </div>
               </div>
               <div className="flex items-center h-full w-full">
-                {showVideo ? (
-                  <VideoPlayer sources={sources} />
+                {episode ? (
+                  <VideoPlayer
+                    episode={episode}
+                    className="relative w-full aspect-video"
+                  />
                 ) : (
                   <div className="w-full h-[20rem] bg-white/10 rounded animate-pulse py-4"></div>
                 )}
@@ -100,10 +108,11 @@ const Watch = () => {
               <img
                 alt=""
                 src={anime?.image}
-                className={`h-44 rounded aspect-[5/7] ${!anime?.image
-                  ? "animate-pulse bg-white/10 ring-0 outline-none"
-                  : ""
-                  }`}
+                className={`h-44 rounded aspect-[5/7] ${
+                  !anime?.image
+                    ? "animate-pulse bg-white/10 ring-0 outline-none"
+                    : ""
+                }`}
               />
               <div className="flex flex-col gap-3">
                 <h2 className="flex text-xl font-bold">
@@ -115,14 +124,16 @@ const Watch = () => {
               </div>
             </div>
 
-            {//@ts-ignore
+            {
+              //@ts-ignore
               anime?.recommendations?.length > 0 && (
                 <CardsScroll
                   Title="Recommendations"
                   recommendations={true}
                   Animes={anime?.recommendations?.slice(0, 8)}
                 />
-              )}
+              )
+            }
           </div>
         </div>
       </main>
