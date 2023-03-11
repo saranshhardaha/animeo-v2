@@ -48,7 +48,7 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
               return (
                 <div
                   key={i}
-                  className="h-[320px] min-w-[240px] w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"></div>
+                  className="h-[240px] min-w-[180px] md:h-[320px] md:min-w-[240px] w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"></div>
               );
             })}
 

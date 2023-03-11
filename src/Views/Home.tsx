@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CardsScroll from "../Components/Sections/CardsScroll";
 // import Carousel from "Components/Carousel";
-import Banner from "Components/Sections/Banner";
+import AiringSchedule from "Components/Sections/AiringSchedule";
 import GenreSelect from "Components/Sections/GenreSelect";
 import { IAnimeResult, ISearch, META } from '@consumet/extensions';
 
@@ -48,7 +48,7 @@ function Home() {
           Dark={false}
           Animes={popularAnimes?.results}
         />
-        <Banner text="Hello" />
+        <AiringSchedule/>
         <GenreSelect />
       </main>
 

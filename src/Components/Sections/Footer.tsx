@@ -4,12 +4,6 @@ import * as Icon from "react-feather";
 
 const Footer = () => (
   <div className="h-full p-4 py-2 w-full bg-white/5 flex flex-col gap-2">
-    <div>
-
-    </div>
-    <div>
-
-    </div>
     <div className="text-sm flex gap-1 items-center">
       <Icon.Droplet size={16} />
       <p>Animeo</p>

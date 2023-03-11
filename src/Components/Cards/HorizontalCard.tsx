@@ -25,7 +25,7 @@ const HorizontalCard = ({ anime }: Props) => (
       <div className="absolute flex flex-col h-full w-full items-start justify-between gap-1">
         <div className="flex items-center gap-1 text-sm bg-white/30 backdrop-blur-3xl text-white  rounded-full m-2 font-semibold p-2 px-2 h-8 max-w-max">
           <Star height="0.75rem" width="0.75rem" fill="#fff" />
-          {(anime?.rating ?? 0 / 10).toFixed(1)}
+          {((anime?.rating ?? 0) / 10).toFixed(1)}
         </div>
 
         <div className="flex flex-col justify-end p-2 bg-gradient-to-t from-black via-black/80 text-white w-full h-32">

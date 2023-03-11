@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App font-manrope bg-[#000] text-white">
       <Header />
-      <div className="mt-12 py-4 min-h-[calc(100vh-3rem)]">
+      <div className="mt-12 min-h-[calc(100vh-3rem)]">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />

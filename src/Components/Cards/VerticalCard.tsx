@@ -13,19 +13,19 @@ const VerticalCard = ({ anime }: Props) => (
     key={anime?.id}
     className="flex flex-col relative w-full group "
   >
-    <motion.div className="flex flex-col h-[320px] min-w-[240px] relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden ring-2 ring-white/5 hover:ring-white/30">
+    <motion.div className="flex flex-col h-[240px] min-w-[180px] md:h-[320px] md:min-w-[240px] relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden ring-2 ring-white/5 hover:ring-white/30">
       <img
         src={anime?.image}
         alt={(anime?.title as ITitle)?.english}
         className="w-full h-auto bg-black aspect-[5/7] ring-1 rounded"
       />
       {anime == null && (
-        <div className="h-[320px] min-w-[240px] bg-white animate-pulse"></div>
+        <div className=" h-[240px] min-w-[180px] md:h-[320px] md:min-w-[240px] bg-white animate-pulse"></div>
       )}
       <div className="absolute flex flex-col h-full w-full items-start justify-between gap-1">
-        <div className="flex items-center gap-1 text-sm bg-white/30 backdrop-blur-3xl text-white  rounded-full m-2 font-semibold p-2 px-2 h-8 max-w-max">
+        <div className="flex items-center gap-1 text-sm bg-white/10 filter backdrop-blur-3xl text-white  rounded-full m-2 font-semibold p-2 px-3 h-8">
           <Star height="0.75rem" width="0.75rem" fill="#fff" />
-          {(anime?.rating ?? 0 / 10).toFixed(1)}
+          {((anime?.rating ?? 0) / 10).toFixed(1)}
         </div>
 
         <div className="flex flex-col justify-end p-2 bg-gradient-to-t from-black via-black/80 text-white w-full h-32">

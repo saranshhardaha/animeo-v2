@@ -34,7 +34,7 @@ const Watch = () => {
     async function FetchResults() {
       setShowVideo(false);
       if (!animeId || !episodeID) return;
-      
+
       await anilist.fetchAnilistInfoById(animeId).then(data => {
         setAnime(data);
       })
@@ -115,11 +115,14 @@ const Watch = () => {
               </div>
             </div>
 
-            <CardsScroll
-              Title="Recommendations"
-              recommendations={true}
-              Animes={anime?.recommendations?.slice(0, 8)}
-            />
+            {//@ts-ignore
+              anime?.recommendations?.length > 0 && (
+                <CardsScroll
+                  Title="Recommendations"
+                  recommendations={true}
+                  Animes={anime?.recommendations?.slice(0, 8)}
+                />
+              )}
           </div>
         </div>
       </main>
