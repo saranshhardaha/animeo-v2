@@ -1,32 +1,31 @@
-import VideoPlayer from "Components/VideoPlayer";
+import VideoPlayer from "../Components/VideoPlayer";
 import React, { useEffect, useState } from "react";
-import { GetAnimeDetails, GetEpisodeDetails } from "Utils/DBServices";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as Icon from "react-feather";
-import AnimeCardsScroll from "Components/AnimeCardsScroll";
+//@ts-ignore
 import { RemoveHTMLTags } from "Utils/Utils";
-// import VideoPlayer  from "Components/VideoPlayer";
+import CardsScroll from "Components/Sections/CardsScroll";
+import { IAnimeEpisode, IAnimeInfo, ISource, ITitle, META } from "@consumet/extensions";
 
-function Watch() {
+const anilist = new META.Anilist();
+const Watch = () => {
   const { animeId, episodeID } = useParams();
-  const navigation = useNavigate();
+  // const navigation = useNavigate();
   let [showVideo, setShowVideo] = useState(false);
-  let [anime, setAnime] = useState(null);
-  const [episodes, setEpisodes] = useState(null);
+  let [anime, setAnime] = useState<IAnimeInfo | null>(null);
+  const [episodes, setEpisodes] = useState<IAnimeEpisode[] | null>(null);
 
-  const [VideoOptions, setVideoOptions] = useState({
-    sources: [],
-  });
-  const filterEpisodes = (e) => {
+  const [sources, setSources] = useState<ISource | null>(null);
+  const filterEpisodes = (e: any) => {
     const value = new RegExp(e.target.value, "gi");
     console.log(value);
-    if (value === null || value === "") {
-      setEpisodes(anime?.episodes);
+    if (value === null) {
+      setEpisodes(anime?.episodes ?? null);
     } else {
       setEpisodes(
         anime?.episodes?.filter(
           (x) => x?.title?.match(value) || x?.number?.toString().match(value)
-        )
+        ) ?? null
       );
     }
   };
@@ -34,16 +33,18 @@ function Watch() {
   useEffect(() => {
     async function FetchResults() {
       setShowVideo(false);
-      let details = await GetEpisodeDetails(episodeID);
-      let animeDetails = await GetAnimeDetails(animeId);
-      setAnime(animeDetails);
-      setEpisodes(animeDetails?.episodes);
-      details?.sources?.forEach((element) => {
-        element.type = "application/x-mpegURL";
-      });
-      setVideoOptions({
-        sources: details?.sources,
-      });
+      if (!animeId || !episodeID) return;
+      
+      await anilist.fetchAnilistInfoById(animeId).then(data => {
+        setAnime(data);
+      })
+      await anilist.fetchEpisodesListById(animeId).then(data => {
+        setEpisodes(data);
+      })
+      await anilist.fetchEpisodeSources(episodeID).then(data => {
+        console.log(data);
+        // setSources(data ?? null);
+      })
       setShowVideo(true);
     }
     FetchResults();
@@ -89,7 +90,7 @@ function Watch() {
               </div>
               <div className="flex items-center h-full w-full">
                 {showVideo ? (
-                  <VideoPlayer sources={VideoOptions?.sources} />
+                  <VideoPlayer sources={sources} />
                 ) : (
                   <div className="w-full h-[20rem] bg-white/10 rounded animate-pulse py-4"></div>
                 )}
@@ -99,19 +100,14 @@ function Watch() {
               <img
                 alt=""
                 src={anime?.image}
-                className={`h-44 rounded aspect-[5/7] ${
-                  !anime?.image
-                    ? "animate-pulse bg-white/10 ring-0 outline-none"
-                    : ""
-                }`}
+                className={`h-44 rounded aspect-[5/7] ${!anime?.image
+                  ? "animate-pulse bg-white/10 ring-0 outline-none"
+                  : ""
+                  }`}
               />
               <div className="flex flex-col gap-3">
                 <h2 className="flex text-xl font-bold">
-                  {anime?.title?.english ? (
-                    anime?.title?.english
-                  ) : (
-                    <span className="w-full h-4 bg-white/10 animate-pulse text-black rounded-md"></span>
-                  )}
+                  {(anime?.title as ITitle)?.english}
                 </h2>
                 <p className="text-sm text-neutral-400 line-clamp-6">
                   {RemoveHTMLTags(anime?.description)}
@@ -119,10 +115,9 @@ function Watch() {
               </div>
             </div>
 
-            <AnimeCardsScroll
+            <CardsScroll
               Title="Recommendations"
-              Recommendations={true}
-              Navigation={navigation}
+              recommendations={true}
               Animes={anime?.recommendations?.slice(0, 8)}
             />
           </div>
@@ -130,6 +125,6 @@ function Watch() {
       </main>
     </>
   );
-}
+};
 
 export default Watch;

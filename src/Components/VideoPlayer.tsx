@@ -1,8 +1,9 @@
+import { ISource } from "@consumet/extensions";
 import React from "react";
-import * as Icon from "react-feather";
-
-export default function VideoPlayer({ sources }) {
-  console.log(sources);
+type Props = {
+  sources: ISource | null
+}
+export default function VideoPlayer({ sources }: Props) {
   return (
     <div className="relative h-full w-full video-js">
       {sources && (
@@ -15,7 +16,7 @@ export default function VideoPlayer({ sources }) {
           muted={false}
           data-setup='{"fluid":true}'
         >
-          {sources.map((x) => (
+          {sources?.sources?.map((x: any) => (
             <source key={x.quality} src={x.url} type="application/x-mpegURL" />
           ))}
 

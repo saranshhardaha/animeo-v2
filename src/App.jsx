@@ -1,27 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import FooterMenu from "Components/Header";
-import MainHeader from "Components/MainHeader";
+import Header from "Components/Sections/Header";
+import Footer from "Components/Sections/Footer";
 import AnimeDetail from "Views/AnimeDetail";
 import Home from "Views/Home";
 import Watch from "Views/Watch";
-import { AnimateSharedLayout } from "framer-motion";
 
 function App() {
   return (
     <div className="App font-manrope bg-[#000] text-white">
-      <AnimateSharedLayout type="crossfade">
-        <MainHeader />
-        <div className="pb-10 md:py-0">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/anime/:animeId" element={<AnimeDetail />} />
-              <Route path="/watch/:animeId/:episodeID" element={<Watch />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
-        <FooterMenu />
-      </AnimateSharedLayout>
+      <Header />
+      <div className="mt-12 py-4 min-h-[calc(100vh-3rem)]">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/anime/:animeId" element={<AnimeDetail />} />
+            <Route path="/watch/:animeId/:episodeID" element={<Watch />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+      <Footer/>
     </div>
   );
 }

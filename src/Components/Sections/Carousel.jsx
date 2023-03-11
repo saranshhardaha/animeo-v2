@@ -4,7 +4,9 @@ import * as Icon from "react-feather";
 import DotIcon from "Components/DotIcon";
 import { ChevronDown, ChevronUp, Clock, Play, Star } from "react-feather";
 
-export default function Carousel(props) {
+
+
+const Carousel = () => {
   var isMouseOver = false;
   const OnMouseEnter = () => {
     isMouseOver = true;
@@ -163,4 +165,5 @@ export default function Carousel(props) {
       </section>
     </>
   );
-}
+};
+export default Carousel;
