@@ -8,16 +8,24 @@ import HorizontalCard from "Components/Cards/HorizontalCard";
 import VerticalCard from "Components/Cards/VerticalCard";
 import { IAnimeInfo, IAnimeResult, ITitle } from "@consumet/extensions";
 type Props = {
-  Title: string,
-  recommendations?: boolean,
-  Dark?: boolean,
-  Animes: Array<IAnimeResult> | undefined,
-  IsVertical?: boolean,
-  ShowAllButton?: boolean,
-  OnAllButtonClick?: MouseEventHandler
-}
+  Title: string;
+  recommendations?: boolean;
+  Dark?: boolean;
+  Animes: Array<IAnimeResult> | undefined;
+  IsVertical?: boolean;
+  ShowAllButton?: boolean;
+  OnAllButtonClick?: MouseEventHandler;
+};
 
-const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, ShowAllButton = true, OnAllButtonClick }: Props) => {
+const CardsScroll = ({
+  recommendations,
+  Dark,
+  Animes,
+  Title,
+  IsVertical = true,
+  ShowAllButton = true,
+  OnAllButtonClick,
+}: Props) => {
   const [selectedAnime, setSelectedAnime] = useState<IAnimeInfo | null>(null);
 
   const OnAnimeSelect = (item: IAnimeInfo) => {
@@ -27,20 +35,20 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
   return (
     <>
       <div
-        className={`max-w-[1800px] mx-auto w-full ${Dark ? "text-black" : "text-white"
-          }`}
+        className={`max-w-[1800px] mx-auto w-full ${
+          Dark ? "text-black" : "text-white"
+        }`}
       >
         <div className="flex items-center justify-between px-1">
-          <p
-            className={`text-xl ${Dark ? "border-black" : "border-white"
-              }`}
-          >
+          <p className={`text-xl ${Dark ? "border-black" : "border-white"}`}>
             {Title}
           </p>
-          {ShowAllButton && (<a href="/" className="flex items-center gap-1 hover:underline">
-            <p className="text-neutral-400">All</p>
-            <Icon.ChevronRight className="text-neutral-400" size={16} />
-          </a>)}
+          {ShowAllButton && (
+            <a href="/" className="flex items-center gap-1 hover:underline">
+              <p className="text-neutral-400">All</p>
+              <Icon.ChevronRight className="text-neutral-400" size={16} />
+            </a>
+          )}
         </div>
         <div className="flex gap-4 place-items-center relative overflow-scroll py-4 px-1 scrollbar-hide h-full w-full">
           {Animes == null &&
@@ -48,19 +56,18 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
               return (
                 <div
                   key={i}
-                  className="h-[240px] min-w-[180px] md:h-[320px] md:min-w-[240px] w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"></div>
+                  className="h-[240px] min-w-[180px] md:h-[320px] md:min-w-[240px] w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"
+                ></div>
               );
             })}
 
-          {Animes && Animes?.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => OnAnimeSelect(item)}
-            >
-              {IsVertical && <VerticalCard anime={item} key={item?.id} />}
-              {!IsVertical && <HorizontalCard anime={item} key={item?.id} />}
-            </div>
-          ))}
+          {Animes &&
+            Animes?.map((item) => (
+              <div key={item.id} onClick={() => OnAnimeSelect(item)}>
+                {IsVertical && <VerticalCard anime={item} key={item?.id} />}
+                {!IsVertical && <HorizontalCard anime={item} key={item?.id} />}
+              </div>
+            ))}
         </div>
       </div>
       <AnimatePresence mode="popLayout">
@@ -85,10 +92,10 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
                   <Icon.X />
                 </motion.button>
               </div>
-              <div className="flex items-start h-full w-full col-span-1">
+              <div className="flex items-start h-44 w-full col-span-1">
                 <motion.img
                   src={selectedAnime?.cover}
-                  className="w-full object-cover min-h-[12rem]"
+                  className="w-full object-cover h-44"
                 />
               </div>
               <div className="flex flex-col gap-1 col-span-3 px-5 p-2 pb-5">
@@ -96,7 +103,7 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
                   {(selectedAnime?.title as ITitle)?.english}
                 </h1>
                 <div className="flex gap-1 font-semibold ">
-                  <p>Ep {selectedAnime?.totalEpisodes}</p>
+                  <p>Ep {selectedAnime?.currentEpisode as string}</p>
                   <DotIcon />
                   {/* <p>{selectedAnime?.duration}m</p>
                   <DotIcon /> */}
@@ -131,6 +138,6 @@ const CardsScroll = ({ recommendations, Dark, Animes, Title, IsVertical = true, 
       </AnimatePresence>
     </>
   );
-}
+};
 
 export default CardsScroll;

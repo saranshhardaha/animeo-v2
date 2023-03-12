@@ -12,7 +12,7 @@ const anilist = new META.Anilist();
 const Watch = () => {
   const { animeId, episodeID } = useParams();
   // const navigation = useNavigate();
-  let [episode, setEpisode] = useState(null);
+  let [episode, setEpisode] = useState<IAnimeEpisode | null>(null);
   let [anime, setAnime] = useState<IAnimeInfo | null>(null);
   const [episodes, setEpisodes] = useState<IAnimeEpisode[] | null>(null);
   const navigate = useNavigate();
@@ -55,11 +55,43 @@ const Watch = () => {
   }, [animeId, episodeID]);
   return (
     <>
-      <main className="flex flex-col min-h-screen md:pt-12 w-full mx-auto max-w-[1440px]">
-        <div className="flex flex-col md:flex-row w-full">
-          <div className="flex flex-col gap-6 p-4 h-full max-w-[68rem] w-full mx-auto">
-            <div className="flex flex-col-reverse md:flex-row gap-2 md:h-[24rem] w-full md:py-4">
-              <div className="flex flex-col gap-3">
+      <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1800px]">
+        <div className="flex flex-col lg:flex-row w-full">
+          <div className="flex flex-col gap-6 p-4 h-full max-w-[1800px] w-full mx-auto">
+            <div className="flex flex-col lg:flex-row gap-4 max-w-max">
+              <div className="flex flex-col gap-4 w-full lg:py-4">
+                <div className="flex items-center h-full w-full lg:h-[28rem] xl:h-[34rem]">
+                  {episode ? (
+                    <VideoPlayer
+                      episode={episode}
+                      className="relative w-full aspect-video h-full"
+                    />
+                  ) : (
+                    <div className="w-full h-[28rem] xl:h-[34rem] bg-white/10 rounded animate-pulse py-4"></div>
+                  )}
+                </div>
+
+                <div className="flex gap-5">
+                  <img
+                    alt=""
+                    src={anime?.image}
+                    className={`h-44 rounded aspect-[5/7] ${
+                      !anime?.image
+                        ? "animate-pulse bg-white/10 ring-0 outline-none"
+                        : ""
+                    }`}
+                  />
+                  <div className="flex flex-col gap-3">
+                    <h2 className="flex text-xl font-bold">
+                      {(anime?.title as ITitle)?.english}
+                    </h2>
+                    <p className="text-sm text-neutral-400 line-clamp-6">
+                      {RemoveHTMLTags(anime?.description)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 lg:max-w-[26rem] w-full h-full">
                 <div className="flex items-center px-2 justify-between text-white w-full">
                   <h2 className="px-1 font-bold">Episodes</h2>
                   <div className="flex gap-1 p-1 items-center rounded-full bg-white/5 hover:bg-white/10">
@@ -74,53 +106,42 @@ const Watch = () => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[24rem] overflow-y-auto scrollbar-hide">
+                <div className="flex flex-col text-white w-full lg:h-[28rem] xl:h-[34rem] overflow-y-auto scrollbar-hide">
                   {episodes?.map((ep) => (
                     <button
                       onClick={() => episodeChange(ep)}
                       key={ep.id}
-                      className="flex gap-2 text-sm py-2 md:px-2 hover:bg-white/5"
+                      className={`group w-full flex gap-2 text-sm p-2 rounded-md transition-all hover:bg-white/5 ${
+                        episode?.number === ep.number ? "bg-white/10" : ""
+                      }`}
                     >
-                      <div className="flex gap-2 items-center">
-                        <div className="font-bold text-center text-sm md:text-lg w-8 md:w-14">
-                          {ep.number}
-                        </div>
-                        <div className="flex flex-col line-clamp-1 w-full">
-                          <p className="text-sm w-64 text-left">{ep.title}</p>
-                        </div>
+                      <div className="grid place-items-center h-16 xl:h-20 w-auto aspect-video relative">
+                        <img
+                          src={`https://images.weserv.nl/?url=${ep.image}`}
+                          alt={ep.id}
+                          className="absolute h-full w-full object-cover rounded-md"
+                        />
+                        <h4
+                          className={`group-hover:opacity-100 grid transition-all ease-in-out place-items-center h-full w-full z-10 text-xl font-bold bg-black/60 drop-shadow rounded-md ${
+                            episode?.number === ep.number
+                              ? "opacity-100"
+                              : "opacity-0 "
+                          }`}
+                        >
+                          Ep {ep.number}
+                        </h4>
+                      </div>
+                      <div className="flex flex-col items-start justify-start w-full">
+                        <h4 className="text-sm text-white text-left line-clamp-1 w-full">
+                          {ep.title}
+                        </h4>
+                        <p className="text-sm text-neutral-500 text-left line-clamp-2 xl:line-clamp-3 w-full">
+                          {ep.description}
+                        </p>
                       </div>
                     </button>
                   ))}
                 </div>
-              </div>
-              <div className="flex items-center h-full w-full">
-                {episode ? (
-                  <VideoPlayer
-                    episode={episode}
-                    className="relative w-full aspect-video"
-                  />
-                ) : (
-                  <div className="w-full h-[20rem] bg-white/10 rounded animate-pulse py-4"></div>
-                )}
-              </div>
-            </div>
-            <div className="flex gap-5">
-              <img
-                alt=""
-                src={anime?.image}
-                className={`h-44 rounded aspect-[5/7] ${
-                  !anime?.image
-                    ? "animate-pulse bg-white/10 ring-0 outline-none"
-                    : ""
-                }`}
-              />
-              <div className="flex flex-col gap-3">
-                <h2 className="flex text-xl font-bold">
-                  {(anime?.title as ITitle)?.english}
-                </h2>
-                <p className="text-sm text-neutral-400 line-clamp-6">
-                  {RemoveHTMLTags(anime?.description)}
-                </p>
               </div>
             </div>
 

@@ -35,16 +35,16 @@ export default function EnimePlayer(props: any) {
           menu: [
             {
               name: "Source",
-              children: sources.map((source) => {
+              children: sources?.map((source) => {
                 return {
                   name: sourceUrlToName(source.url),
-                  default: source.url.includes("gogoanime"),
-                  value: source.id,
+                  default: source?.url?.includes("gogoanime"),
+                  value: source?.id,
                 };
               }),
               onChange({ value }: any) {
                 setSourceIndex(
-                  sources.findIndex((source) => source.id === value)
+                  sources?.findIndex((source) => source?.id === value)
                 );
               },
             },
@@ -67,6 +67,7 @@ export default function EnimePlayer(props: any) {
   }, []);
 
   useEffect(() => {
+    if (!sources) return;
     fetch(`https://api.enime.moe/source/${sources[sourceIndex].id}`)
       .then((res) => res.json())
       .then((res) => {
