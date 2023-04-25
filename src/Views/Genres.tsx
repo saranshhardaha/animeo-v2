@@ -18,7 +18,7 @@ const Genres = () => {
     FetchResults();
   }, [genre]);
   return (
-    <div className="max-w-[1800px] mx-auto p-4">
+    <div className="max-w-[1440px] mx-auto p-4">
       <GenreSelect center={true} />
       <h4 className="w-full text-center text-xl py-4">{genre}</h4>
       <div className="h-full flex flex-wrap justify-center gap-4 p-4">
@@ -26,7 +26,7 @@ const Genres = () => {
           animes.results.map((anime) => (
             <VerticalCard key={anime.id} anime={anime} />
           ))}
-        {!animes?.results &&
+        {/* {!animes?.results &&
           Array.from(Array(20), (e, i) => {
             return (
               <div
@@ -34,7 +34,7 @@ const Genres = () => {
                 className="h-[240px] w-[180px] md:h-[320px] md:w-[240px] animate-pulse bg-white/10 backdrop-blur-xl rounded"
               ></div>
             );
-          })}
+          })} */}
       </div>
     </div>
   );

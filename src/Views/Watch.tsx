@@ -55,9 +55,9 @@ const Watch = () => {
   }, [animeId, episodeID]);
   return (
     <>
-      <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1800px]">
+      <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1440px]">
         <div className="flex flex-col lg:flex-row w-full">
-          <div className="flex flex-col gap-6 p-4 h-full max-w-[1800px] w-full mx-auto">
+          <div className="flex flex-col gap-6 p-4 h-full max-w-[1440px] w-full mx-auto">
             <div className="flex flex-col lg:flex-row gap-4 max-w-max">
               <div className="flex flex-col gap-4 w-full lg:py-4">
                 <div className="flex items-center h-full w-full lg:h-[28rem] xl:h-[34rem]">

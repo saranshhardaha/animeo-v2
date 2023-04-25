@@ -35,7 +35,7 @@ const CardsScroll = ({
   return (
     <>
       <div
-        className={`max-w-[1800px] mx-auto w-full ${
+        className={`max-w-[1440px] mx-auto w-full ${
           Dark ? "text-black" : "text-white"
         }`}
       >

@@ -48,9 +48,9 @@ const Header = () => {
           </motion.div>
         </div>
         <div className="flex items-center gap-4 h-full">
-          <button className="p-1 px-2 opacity-50 hover:opacity-80 transition-al">
+          <a href="/search" className="p-1 px-2 opacity-50 hover:opacity-80 transition-al">
             <Icon.Search size={16} />
-          </button>
+          </a>
           <button className="text-white opacity-50 hover:opacity-80 transition-all">
             <Icon.Bell size={20} fill="#fff" />
           </button>

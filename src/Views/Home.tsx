@@ -34,7 +34,7 @@ function Home() {
   return (
     <>
       {/* <OverlaySearch /> */}
-      <main className="h-full flex flex-col gap-2 max-w-[1800px] mx-auto p-4">
+      <main className="h-full flex flex-col gap-2 max-w-[1440px] mx-auto p-4">
         {/* <Carousel Animes={trendingAnimes} /> */}
         {/* Categories */}
         <CardsScroll
@@ -58,13 +58,13 @@ function Home() {
         />
         <AiringSchedule />
         <GenreSelect />
-        {animes &&
+        {/* {animes &&
           animes?.map((anime: any) => (
             <div>
               {anime?.title?.english}
               {anime?.slug}
             </div>
-          ))}
+          ))} */}
       </main>
     </>
   );

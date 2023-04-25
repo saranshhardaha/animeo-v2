@@ -5,6 +5,7 @@ import AnimeDetail from "Views/AnimeDetail";
 import Home from "Views/Home";
 import Watch from "Views/Watch";
 import Genres from "Views/Genres";
+import Search from "Views/Search";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/anime/:animeId" element={<AnimeDetail />} />
             <Route path="/genre/:genre/" element={<Genres />} />
             <Route path="/watch/:animeId/:episodeID" element={<Watch />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </BrowserRouter>
       </div>

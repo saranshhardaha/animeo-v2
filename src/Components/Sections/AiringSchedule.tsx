@@ -12,6 +12,7 @@ const AiringSchedule = () => {
   useEffect(() => {
     async function FetchResults() {
       await anilist.fetchAiringSchedule().then((data) => {
+        console.log(data)
         setSchedule(data);
       });
     }
