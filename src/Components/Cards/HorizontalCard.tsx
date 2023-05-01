@@ -9,10 +9,7 @@ type Props = {
   anime: IAnimeInfo
 }
 const HorizontalCard = ({ anime }: Props) => (
-  <motion.div
-    key={anime?.id}
-    className="flex flex-col relative w-full group "
-  >
+  <motion.div key={anime?.id} className="flex flex-col relative w-full group ">
     <motion.div className="flex flex-col h-[136px] min-w-[240px] relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden ring-2 ring-white/5 hover:ring-white/30">
       <img
         src={anime?.image}
@@ -77,6 +74,6 @@ const HorizontalCard = ({ anime }: Props) => (
       </div>
     </div>
   </motion.div>
-)
+);
 
 export default HorizontalCard;

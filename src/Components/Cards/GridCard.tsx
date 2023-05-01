@@ -7,12 +7,12 @@ import { IAnimeInfo, ITitle } from "@consumet/extensions";
 type Props = {
   anime: IAnimeInfo;
 };
-const VerticalCard = ({ anime }: Props) => (
+const GridCard = ({ anime }: Props) => (
   <motion.div
     key={anime?.id}
     className="flex flex-col relative max-w-max group"
   >
-    <motion.div className="flex flex-col  w-[180px] md:w-[240px] relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden">
+    <motion.div className="flex flex-col w-full h-full relative cursor-pointer hover:opacity-60 transition-all rounded overflow-hidden">
       <div className="relative flex w-full">
         <img
           src={anime?.image}
@@ -49,4 +49,4 @@ const VerticalCard = ({ anime }: Props) => (
   </motion.div>
 );
 
-export default VerticalCard;
+export default GridCard;

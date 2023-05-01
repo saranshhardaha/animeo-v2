@@ -20,7 +20,7 @@ function AnimeDetail() {
       if (animeId)
         await anilist.fetchAnimeInfo(animeId).then((data) => {
           setResponse(data);
-          console.log(data)
+          console.log(data);
           setEpisodes(data.episodes);
         });
     }
@@ -42,6 +42,9 @@ function AnimeDetail() {
 
   return (
     <>
+      {!response && (
+        <div className="grid place-items-center h-screen w-full">Loading..</div>
+      )}
       {response && (
         <section className="flex flex-col gap-3 w-full h-full bg-black/80">
           <div className="relative flex flex-col w-full h-full">
@@ -125,7 +128,9 @@ function AnimeDetail() {
                       <p className="flex text-white/60">Synonyms: </p>
                       <div className="font-semibold overflow-hidden line-clamp-1 w-full">
                         {response?.synonyms?.map((x) => (
-                          <span className="px-1">{x}</span>
+                          <span key={x} className="px-1">
+                            {x}
+                          </span>
                         ))}
                       </div>
                     </div>
@@ -174,83 +179,88 @@ function AnimeDetail() {
             </div>
           </div>
 
-          {episodes && (
-            <div className="flex flex-col gap-3 p-4 max-w-[1440px] w-full mx-auto">
-              <div className="flex items-center justify-between text-white">
-                <h2 className="py-2 px-1 text-xl font-bold">Episodes</h2>
-                <div className="flex gap-1 p-1 px-2 items-center rounded-full bg-white/5 hover:bg-white/10">
-                  <button className="p-1 opacity-50 group-focus-within:opacity-80">
-                    <Icon.Search size={20} />
-                  </button>
-                  <input
-                    type="text"
-                    onChange={filterEpisodes}
-                    placeholder="Search"
-                    className="p-1 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
-                  />
+          <div className="w-full max-w-[1440px] mx-auto">
+            {episodes && (
+              <div className="flex flex-col gap-3 p-4 w-full mx-auto">
+                <div className="flex items-center justify-between text-white">
+                  <h2 className="py-2 px-1 text-xl font-bold">Episodes</h2>
+                  <div className="flex gap-1 p-1 px-2 items-center rounded-full bg-white/5 hover:bg-white/10">
+                    <button className="p-1 opacity-50 group-focus-within:opacity-80">
+                      <Icon.Search size={20} />
+                    </button>
+                    <input
+                      type="text"
+                      onChange={filterEpisodes}
+                      placeholder="Search"
+                      className="p-1 pl-3 bg-transparent focus-visible:outline-none w-full transition-all"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto scrollbar-hide">
+                  {episodes?.map((ep) => (
+                    <a
+                      href={"/watch/" + response?.id + "/" + ep?.number}
+                      key={ep.id}
+                      className="flex gap-2 text-sm py-2 md:px-4 hover:bg-white/5"
+                    >
+                      <div className="flex gap-2 items-center">
+                        <div className="font-bold text-center text-base md:text-xl w-12 md:w-16">
+                          {ep.number}
+                        </div>
+                        <div className="flex flex-col w-full">
+                          <p className="text-base">{ep.title}</p>
+                          <p className="text-white/50 line-clamp-1">
+                            {ep?.description}
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
-              <div className="flex flex-col divide-y divide-solid divide-white/10 text-white max-h-[32rem] overflow-y-auto scrollbar-hide">
-                {episodes?.map((ep) => (
-                  <a
-                    href={"/watch/" + response?.id + "/" + ep?.number}
-                    key={ep.id}
-                    className="flex gap-2 text-sm py-2 md:px-4 hover:bg-white/5"
-                  >
-                    <div className="flex gap-2 items-center">
-                      <div className="font-bold text-center text-base md:text-xl w-12 md:w-16">
-                        {ep.number}
-                      </div>
-                      <div className="flex flex-col w-full">
-                        <p className="text-base">{ep.title}</p>
-                        <p className="text-white/50 line-clamp-1">
-                          {ep?.description}
+            )}
+
+            <div className="flex flex-col gap-3 p-4  w-full mx-auto">
+              <div className="flex items-center justify-between text-white">
+                <h2 className="py-2 px-1 text-xl font-bold">Characters</h2>
+              </div>
+              <div className="flex p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur scrollbar-hide">
+                {response?.characters &&
+                  (response?.characters as any)?.map((char: any) => (
+                    <div
+                      className="flex flex-col gap-3 p-2 h-full w-full"
+                      key={char.id}
+                    >
+                      <img
+                        src={char?.image}
+                        alt="test"
+                        className="rounded object-cover min-w-[5rem] md:min-w-[7rem] h-20 md:h-28"
+                      />
+                      <div className="flex flex-col items-start gap-1 text-white/70 text-xs md:text-sm w-full">
+                        <p
+                          title={char.name.full}
+                          className=" text-white font-semibold line-clamp-1 w-full break-all"
+                        >
+                          {char.name.full}
                         </p>
+                        <p>{char?.role}</p>
                       </div>
                     </div>
-                  </a>
-                ))}
+                  ))}
               </div>
             </div>
-          )}
-
-          <div className="flex flex-col gap-3 p-4 max-w-[1440px] w-full mx-auto">
-            <div className="flex items-center justify-between text-white">
-              <h2 className="py-2 px-1 text-xl font-bold">Characters</h2>
+            <div className="p-4">
+              {
+                //@ts-ignore
+                response?.recommendations?.length > 0 && (
+                  <CardsScroll
+                    Title="Recommendations"
+                    recommendations={true}
+                    Animes={response?.recommendations?.slice(0, 8)}
+                  />
+                )
+              }
             </div>
-            <div className="flex p-2 overflow-y-auto max-h-[30rem] bg-black/20 backdrop-blur scrollbar-hide">
-              {response?.characters &&
-                (response?.characters as any)?.map((char: any) => (
-                  <div
-                    className="flex flex-col gap-3 p-2 h-full w-full"
-                    key={char.id}
-                  >
-                    <img
-                      src={char?.image}
-                      alt="test"
-                      className="rounded-full object-cover min-w-[5rem] md:min-w-[7rem] h-20 md:h-28"
-                    />
-                    <div className="flex flex-col items-center gap-1 text-white/70 text-xs md:text-sm w-full">
-                      <p className=" text-white font-semibold line-clamp-1 w-full break-all">
-                        {char.name.full}
-                      </p>
-                      <p>{char?.role}</p>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-          <div className="p-4">
-            {
-              //@ts-ignore
-              response?.recommendations?.length > 0 && (
-                <CardsScroll
-                  Title="Recommendations"
-                  recommendations={true}
-                  Animes={response?.recommendations?.slice(0, 8)}
-                />
-              )
-            }
           </div>
         </section>
       )}

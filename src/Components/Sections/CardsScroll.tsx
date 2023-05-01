@@ -29,7 +29,10 @@ const CardsScroll = ({
   const [selectedAnime, setSelectedAnime] = useState<IAnimeInfo | null>(null);
 
   const OnAnimeSelect = (item: IAnimeInfo) => {
-    if (!recommendations) setSelectedAnime(item);
+    if (!recommendations) {
+      setSelectedAnime(item);
+      console.log(item);
+    }
     // else Navigation(`/anime/${item?.id}`, true);
   };
   return (
@@ -92,10 +95,10 @@ const CardsScroll = ({
                   <Icon.X />
                 </motion.button>
               </div>
-              <div className="flex items-start h-44 w-full col-span-1">
+              <div className="flex items-start h-56 w-full col-span-1">
                 <motion.img
                   src={selectedAnime?.cover}
-                  className="w-full object-cover h-44"
+                  className="w-full object-cover h-full md:h-56"
                 />
               </div>
               <div className="flex flex-col gap-1 col-span-3 px-5 p-2 pb-5">
@@ -103,7 +106,7 @@ const CardsScroll = ({
                   {(selectedAnime?.title as ITitle)?.english}
                 </h1>
                 <div className="flex gap-1 font-semibold ">
-                  <p>Ep {selectedAnime?.currentEpisode as string}</p>
+                  <p>Ep {selectedAnime?.totalEpisodes}</p>
                   <DotIcon />
                   {/* <p>{selectedAnime?.duration}m</p>
                   <DotIcon /> */}

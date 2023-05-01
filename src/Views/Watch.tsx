@@ -55,109 +55,116 @@ const Watch = () => {
   }, [animeId, episodeID]);
   return (
     <>
-      <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1440px]">
-        <div className="flex flex-col lg:flex-row w-full">
-          <div className="flex flex-col gap-6 p-4 h-full max-w-[1440px] w-full mx-auto">
-            <div className="flex flex-col lg:flex-row gap-4 max-w-max">
-              <div className="flex flex-col gap-4 w-full lg:py-4">
-                <div className="flex items-center h-full w-full lg:h-[28rem] xl:h-[34rem]">
-                  {episode ? (
-                    <VideoPlayer
-                      episode={episode}
-                      className="relative w-full aspect-video h-full"
-                    />
-                  ) : (
-                    <div className="w-full h-[28rem] xl:h-[34rem] bg-white/10 rounded animate-pulse py-4"></div>
-                  )}
-                </div>
-
-                <div className="flex gap-5">
-                  <img
-                    alt=""
-                    src={anime?.image}
-                    className={`h-44 rounded aspect-[5/7] ${
-                      !anime?.image
-                        ? "animate-pulse bg-white/10 ring-0 outline-none"
-                        : ""
-                    }`}
-                  />
-                  <div className="flex flex-col gap-3">
-                    <h2 className="flex text-xl font-bold">
-                      {(anime?.title as ITitle)?.english}
-                    </h2>
-                    <p className="text-sm text-neutral-400 line-clamp-6">
-                      {RemoveHTMLTags(anime?.description)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-3 lg:max-w-[26rem] w-full h-full">
-                <div className="flex items-center px-2 justify-between text-white w-full">
-                  <h2 className="px-1 font-bold">Episodes</h2>
-                  <div className="flex gap-1 p-1 items-center rounded-full bg-white/5 hover:bg-white/10">
-                    <button className="p-1 opacity-50 group-focus-within:opacity-80">
-                      <Icon.Search size={20} />
-                    </button>
-                    <input
-                      type="text"
-                      onChange={filterEpisodes}
-                      placeholder="Search"
-                      className="p-1 pl-3 text-sm bg-transparent focus-visible:outline-none w-full transition-all"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col text-white w-full lg:h-[28rem] xl:h-[34rem] overflow-y-auto scrollbar-hide">
-                  {episodes?.map((ep) => (
-                    <button
-                      onClick={() => episodeChange(ep)}
-                      key={ep.id}
-                      className={`group w-full flex gap-2 text-sm p-2 rounded-md transition-all hover:bg-white/5 ${
-                        episode?.number === ep.number ? "bg-white/10" : ""
-                      }`}
-                    >
-                      <div className="grid place-items-center h-16 xl:h-20 w-auto aspect-video relative">
-                        <img
-                          src={`https://images.weserv.nl/?url=${ep.image}`}
-                          alt={ep.id}
-                          className="absolute h-full w-full object-cover rounded-md"
-                        />
-                        <h4
-                          className={`group-hover:opacity-100 grid transition-all ease-in-out place-items-center h-full w-full z-10 text-xl font-bold bg-black/60 drop-shadow rounded-md ${
-                            episode?.number === ep.number
-                              ? "opacity-100"
-                              : "opacity-0 "
-                          }`}
-                        >
-                          Ep {ep.number}
-                        </h4>
-                      </div>
-                      <div className="flex flex-col items-start justify-start w-full">
-                        <h4 className="text-sm text-white text-left line-clamp-1 w-full">
-                          {ep.title}
-                        </h4>
-                        <p className="text-sm text-neutral-500 text-left line-clamp-2 xl:line-clamp-3 w-full">
-                          {ep.description}
-                        </p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {
-              //@ts-ignore
-              anime?.recommendations?.length > 0 && (
-                <CardsScroll
-                  Title="Recommendations"
-                  recommendations={true}
-                  Animes={anime?.recommendations?.slice(0, 8)}
-                />
-              )
-            }
-          </div>
+      {!episodes && (
+        <div className="grid place-items-center h-screen w-full">
+          Loading..
         </div>
-      </main>
+      )}
+      {episodes && (
+        <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1440px]">
+          <div className="flex flex-col lg:flex-row w-full">
+            <div className="flex flex-col gap-6 p-4 h-full max-w-[1440px] w-full mx-auto">
+              <div className="flex flex-col lg:flex-row gap-4 max-w-max">
+                <div className="flex flex-col gap-4 w-full lg:py-4">
+                  <div className="flex items-center h-full w-full lg:h-[28rem] xl:h-[34rem]">
+                    {episode ? (
+                      <VideoPlayer
+                        episode={episode}
+                        className="relative w-full aspect-video h-full"
+                      />
+                    ) : (
+                      <div className="w-full h-[28rem] xl:h-[34rem] bg-white/10 rounded animate-pulse py-4"></div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-5">
+                    <img
+                      alt=""
+                      src={anime?.image}
+                      className={`h-44 rounded aspect-[5/7] ${
+                        !anime?.image
+                          ? "animate-pulse bg-white/10 ring-0 outline-none"
+                          : ""
+                      }`}
+                    />
+                    <div className="flex flex-col gap-3">
+                      <h2 className="flex text-xl font-bold">
+                        {(anime?.title as ITitle)?.english}
+                      </h2>
+                      <p className="text-sm text-neutral-400 line-clamp-6">
+                        {RemoveHTMLTags(anime?.description)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 lg:max-w-[26rem] w-full h-full">
+                  <div className="flex items-center px-2 justify-between text-white w-full">
+                    <h2 className="px-1 font-bold">Episodes</h2>
+                    <div className="flex gap-1 p-1 items-center rounded-full bg-white/5 hover:bg-white/10">
+                      <button className="p-1 opacity-50 group-focus-within:opacity-80">
+                        <Icon.Search size={20} />
+                      </button>
+                      <input
+                        type="text"
+                        onChange={filterEpisodes}
+                        placeholder="Search"
+                        className="p-1 pl-3 text-sm bg-transparent focus-visible:outline-none w-full transition-all"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col text-white w-full h-[28rem] xl:h-[34rem] overflow-y-auto scrollbar-hide">
+                    {episodes?.map((ep) => (
+                      <button
+                        onClick={() => episodeChange(ep)}
+                        key={ep.id}
+                        className={`group w-full flex gap-2 text-sm p-2 rounded-md transition-all hover:bg-white/5 ${
+                          episode?.number === ep.number ? "bg-white/10" : ""
+                        }`}
+                      >
+                        <div className="grid place-items-center h-16 xl:h-20 w-auto aspect-video relative">
+                          <img
+                            src={`https://images.weserv.nl/?url=${ep.image}`}
+                            alt={ep.id}
+                            className="absolute h-full w-full object-cover rounded-md"
+                          />
+                          <h4
+                            className={`group-hover:opacity-100 grid transition-all ease-in-out place-items-center h-full w-full z-10 text-xl font-bold bg-black/60 drop-shadow rounded-md ${
+                              episode?.number === ep.number
+                                ? "opacity-100"
+                                : "opacity-0 "
+                            }`}
+                          >
+                            Ep {ep.number}
+                          </h4>
+                        </div>
+                        <div className="flex flex-col items-start justify-start w-full">
+                          <h4 className="text-sm text-white text-left line-clamp-1 w-full">
+                            {ep.title}
+                          </h4>
+                          <p className="text-sm text-neutral-500 text-left line-clamp-2 xl:line-clamp-3 w-full">
+                            {ep.description}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {
+                //@ts-ignore
+                anime?.recommendations?.length > 0 && (
+                  <CardsScroll
+                    Title="Recommendations"
+                    recommendations={true}
+                    Animes={anime?.recommendations?.slice(0, 8)}
+                  />
+                )
+              }
+            </div>
+          </div>
+        </main>
+      )}
     </>
   );
 };

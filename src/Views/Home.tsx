@@ -16,8 +16,9 @@ function Home() {
   const [trendingAnimes, setTrendingAnimes] = useState<
     ISearch<IAnimeResult> | undefined
   >();
-  const [animes, setAnimes] = useState<[] | undefined>();
+  // const [animes, setAnimes] = useState<[] | undefined>();
   const isLoggedIn = false;
+
   useEffect(() => {
     async function FetchResults() {
       await anilist.fetchPopularAnime().then((data) => {
@@ -27,10 +28,10 @@ function Home() {
         setTrendingAnimes(data);
       });
       var test = await fetchPopular();
-      setAnimes(test.data);
     }
     FetchResults();
   }, []);
+
   return (
     <>
       {/* <OverlaySearch /> */}

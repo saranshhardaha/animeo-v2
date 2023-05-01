@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import VerticalCard from "Components/Cards/VerticalCard";import { motion, AnimatePresence } from "framer-motion";
+import GridCard from "Components/Cards/GridCard";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   IAnimeResult,
   ITitle,
@@ -17,22 +18,14 @@ const Search = () => {
   const [text, setText] = useState("");
   const [animes, setAnimes] = useState<
     ISearch<IAnimeResult> | undefined | null
-    >();
+  >();
   const [selectedAnime, setSelectedAnime] = useState<IAnimeInfo | null>(null);
 
   const OnAnimeSelect = (item: IAnimeInfo) => {
     setSelectedAnime(item);
-    // else Navigation(`/anime/${item?.id}`, true);
   };
-  const searchAnimes = (e: any) => {
-    const value = new RegExp(e.target.value, "gi");
-    if (value === null) {
-      setAnimes(null);
-    } else {
-      SearchAnimes(e.target.value);
-    }
-  };
-  function handleChange(e:any) {
+  
+  function handleChange(e: any) {
     setText(e.target.value);
   }
   async function SearchAnimes(searchQuery: string) {
@@ -44,6 +37,9 @@ const Search = () => {
       setAnimes(data);
     });
   }
+  useEffect(() => {
+    if (searchQuery != null) SearchAnimes(searchQuery);
+  }, [searchQuery]);
 
   return (
     <div>
@@ -65,14 +61,15 @@ const Search = () => {
             className="p-1 pl-3 text-sm bg-transparent focus-visible:outline-none w-full transition-all"
           />
         </div>
-        <div className="h-full flex flex-wrap justify-center gap-4 p-4">
+        <div className="h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 justify-center gap-4 py-4 p-2">
           {animes?.results &&
             animes.results.map((item) => (
               <div key={item.id} onClick={() => OnAnimeSelect(item)}>
-                <VerticalCard anime={item} key={item?.id} />
+                <GridCard anime={item} key={item?.id} />
               </div>
             ))}
         </div>
+
         <AnimatePresence mode="popLayout">
           {selectedAnime && (
             <motion.div
@@ -106,7 +103,7 @@ const Search = () => {
                     {(selectedAnime?.title as ITitle)?.english}
                   </h1>
                   <div className="flex gap-1 font-semibold ">
-                    <p>Ep {selectedAnime?.currentEpisode as string}</p>
+                    <p>Ep {selectedAnime?.totalEpisodes as number}</p>
                     <DotIcon />
                     {/* <p>{selectedAnime?.duration}m</p>
                   <DotIcon /> */}
