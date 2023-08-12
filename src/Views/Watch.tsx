@@ -1,9 +1,8 @@
 import VideoPlayer from "../Components/VideoPlayer";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchEpisodes, fetchSource } from "Utils/DBServices";
+import { fetchEpisodes } from "Utils/DBServices";
 import * as Icon from "react-feather";
-//@ts-ignore
 import { RemoveHTMLTags } from "Utils/Utils";
 import CardsScroll from "Components/Sections/CardsScroll";
 import { IAnimeEpisode, IAnimeInfo, ITitle, META } from "@consumet/extensions";
@@ -22,7 +21,6 @@ const Watch = () => {
   };
   const filterEpisodes = (e: any) => {
     const value = new RegExp(e.target.value, "gi");
-    console.log(value);
     if (value === null) {
       setEpisodes(anime?.episodes ?? null);
     } else {
@@ -48,7 +46,6 @@ const Watch = () => {
           await fetch(`https://api.enime.moe/view/${ani?.slug}/${episodeID}`)
         ).json();
         setEpisode(episode);
-        console.log(episode);
       }
     }
     FetchResults();
@@ -56,9 +53,7 @@ const Watch = () => {
   return (
     <>
       {!episodes && (
-        <div className="grid place-items-center h-screen w-full">
-          Loading..
-        </div>
+        <div className="grid place-items-center h-screen w-full">Loading..</div>
       )}
       {episodes && (
         <main className="flex flex-col min-h-screen w-full mx-auto max-w-[1440px]">

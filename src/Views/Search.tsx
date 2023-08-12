@@ -31,9 +31,6 @@ const Search = () => {
   async function SearchAnimes(searchQuery: string) {
     if (!searchQuery) return;
     await anilist.search(searchQuery).then((data) => {
-      console.log(
-        data?.results?.sort((a: any, b: any) => b.popularity - a.popularity)
-      );
       setAnimes(data);
     });
   }

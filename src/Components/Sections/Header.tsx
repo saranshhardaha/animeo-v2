@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import * as Icon from "react-feather";
-import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [isActive, setIsActive] = useState(false);
-  const [activeItem, setActiveItem] = useState("");
-  const [isSettingActive, setIsSettingActive] = useState(false);
+  // const [activeItem, setActiveItem] = useState("");
+  // const [isSettingActive, setIsSettingActive] = useState(false);
   const [text, setText] = useState("");
 
   const navigate = useNavigate();
-  const searchAnimes = (value: string) => {
-    if (value != null) {
-      navigate(`/search/${value}`);
+
+  const handleChange = (e: any) => {
+    setText(e.target.value);
+  };
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      searchAnimes(navigate, text);
     }
   };
-  function handleChange(e: any) {
-    setText(e.target.value);
-  }
+
+  const navigations = ["Genres", "Ongoing", "Upcoming", "Random"];
+
   return (
-    <motion.div className="fixed flex items-center z-20 top-0 bg-transparent h-12 w-full">
-      <div className="flex justify-between items-center h-full gap-2 px-4 text-white text-sm w-full bg-black/90 backdrop-blur-xl">
+    <motion.div className="fixed flex items-center z-20 top-0 h-16 w-full bg-black backdrop-blur-xl">
+      <div className="flex justify-between items-center h-full gap-2 px-4 text-white text-sm w-full max-w-[1440px] mx-auto ">
         <div className="flex items-center gap-4 h-full">
           <a
             href="/"
@@ -29,49 +33,27 @@ const Header = () => {
             <Icon.Droplet size={20} />
             <p>Animeo</p>
           </a>
-          <motion.div className=" hidden items-center gap-2 rounded-full bg-white/5 p-1">
-            <motion.div
-              className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
-                activeItem === "Animes"
-                  ? "text-black bg-white/80 hover:bg-white font-semibold"
-                  : "text-white opacity-50 hover:opacity-100"
-              } "`}
-            >
-              Animes
-            </motion.div>
-            <motion.div
-              className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
-                activeItem === "Movies"
-                  ? "text-black bg-white/80 hover:bg-white font-semibold"
-                  : "text-white opacity-50 hover:opacity-100"
-              } "`}
-            >
-              Movies
-            </motion.div>
-
-            <motion.div
-              className={`"flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full ${
-                activeItem === "Filter"
-                  ? "text-black bg-white/80 hover:bg-white font-semibold"
-                  : "text-white opacity-50 hover:opacity-100"
-              } "`}
-            >
-              Filter
-            </motion.div>
-          </motion.div>
         </div>
-        <div className="flex items-center gap-4 h-full">
-          <div className="flex items-center  p-1 rounded-full bg-white/5">
+        <div className="flex items-center gap-2 h-full">
+          <motion.div className="hidden sm:flex items-center gap-2 rounded-full bg-white/10 p-1">
+            {navigations &&
+              navigations.map((x) => (
+                <motion.a
+                  key={x}
+                  className="flex p-1.5 px-4 transition-all tracking-wider cursor-pointer rounded-full text-white opacity-50 hover:opacity-100"
+                  href={`/${x}`}
+                >
+                  {x}
+                </motion.a>
+              ))}
+          </motion.div>
+          <div className="flex items-center p-2 rounded-full bg-white/10">
             <input
               placeholder="Search animes!"
-              className="hidden sm:flex p-1 px-3 bg-transparent active:outline-none focus:outline-none"
+              className="flex sm:hidden p-1 px-3 bg-transparent active:outline-none focus:outline-none"
               onChange={handleChange}
               value={text}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  searchAnimes(text);
-                }
-              }}
+              onKeyDown={handleKeyDown}
             />
             <a
               href="/search"
@@ -80,23 +62,18 @@ const Header = () => {
               <Icon.Search size={16} />
             </a>
           </div>
-
-          {/* TODO */}
-          <div className="hidden">
+          {/*<div className="hidden">
             <button className="text-white opacity-50 hover:opacity-80 transition-all">
               <Icon.Bell size={20} fill="#fff" />
             </button>
             <motion.button
               initial={{ width: "2.5rem" }}
-              transition={{
-                x: { duration: 1 },
-                ease: "linear",
-              }}
+              transition={{ x: { duration: 1 }, ease: "linear" }}
               exit={{ width: "2.5rem" }}
               whileHover={{
                 width: "10rem",
               }}
-              onClick={() => setIsSettingActive(!isSettingActive)}
+              onClick={handleSettingClick}
               className="flex items-center justify-between gap-3 rounded-full bg-white/10 p-1 transition-all overflow-hidden hover:bg-white/5"
             >
               <img
@@ -149,11 +126,17 @@ const Header = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </div> */}
         </div>
       </div>
     </motion.div>
   );
+};
+
+const searchAnimes = (navigate: NavigateFunction, value: string) => {
+  if (value) {
+    navigate(`/search/${value}`);
+  }
 };
 
 export default Header;

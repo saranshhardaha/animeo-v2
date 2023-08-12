@@ -20,7 +20,6 @@ function AnimeDetail() {
       if (animeId)
         await anilist.fetchAnimeInfo(animeId).then((data) => {
           setResponse(data);
-          console.log(data);
           setEpisodes(data.episodes);
         });
     }

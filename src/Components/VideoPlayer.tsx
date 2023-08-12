@@ -59,10 +59,7 @@ export default function EnimePlayer(props: any) {
         }
       })
       .on("videosourcechanged", () => {
-        //@ts-ignore
-        playerRef.current.loader?.on("hlsManifestParsed", (data: any) => {
-          console.log(data);
-        });
+        
       });
   }, []);
 

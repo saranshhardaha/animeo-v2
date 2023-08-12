@@ -1,33 +1,34 @@
 import axios from "axios";
 const BaseURL = "https://api.enime.moe/";
 // const BaseURL = "http://192.168.29.38:3050/";
-async function GetDataFromURL(URL: string, Params?: any) {
+async function getDataFromURL<T>(URL: string, params?: any): Promise<T> {
   try {
-    const { data } = await axios.get(URL, {
-      params: Params,
-    });
+    const { data } = await axios.get<T>(URL, { params });
     return data;
   } catch (err: any) {
     throw new Error(err.message);
   }
 }
-export async function fetchPopular(PageNo = 1) {
-  const ReqURL = BaseURL + "popular";
-  const Params = {
-    page: PageNo,
+
+export async function fetchPopular(pageNo: number = 1) {
+  const reqURL = `${BaseURL}popular`;
+  const params = {
+    page: pageNo,
     perPage: 10,
   };
-  return await GetDataFromURL(ReqURL, Params);
+  return await getDataFromURL(reqURL, params);
 }
+
 export async function fetchEpisodes(animeID: string) {
-  const ReqURL = BaseURL + "mapping/anilist/" + animeID;
-  var anime = await GetDataFromURL(ReqURL);
-  anime.episodes = anime?.episodes.sort((a: any, b: any) => {
-    return a.number > b.number ? 1 : -1;
-  });
+  const reqURL = `${BaseURL}mapping/anilist/${animeID}`;
+  const anime = await getDataFromURL<any>(reqURL);
+  anime.episodes.sort(
+    (a: { number: number }, b: { number: number }) => a.number - b.number
+  );
   return anime;
 }
+
 export async function fetchSource(episodeID: string) {
-  const ReqURL = BaseURL + "source/" + episodeID;
-  return await GetDataFromURL(ReqURL);
+  const reqURL = `${BaseURL}source/${episodeID}`;
+  return await getDataFromURL(reqURL);
 }

@@ -31,7 +31,6 @@ const CardsScroll = ({
   const OnAnimeSelect = (item: IAnimeInfo) => {
     if (!recommendations) {
       setSelectedAnime(item);
-      console.log(item);
     }
     // else Navigation(`/anime/${item?.id}`, true);
   };

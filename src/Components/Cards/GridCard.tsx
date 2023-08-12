@@ -26,7 +26,7 @@ const GridCard = ({ anime }: Props) => (
       </div>
 
       {anime == null && (
-        <div className="w-full sm:h-[240px] sm:w-[180px] md:h-[320px] md:w-[240px] bg-white animate-pulse"></div>
+        <div className="w-full sm:h-[240px] sm:w-[180px] bg-white animate-pulse"></div>
       )}
 
       <div className="flex flex-col h-full w-full items-start">

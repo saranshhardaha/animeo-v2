@@ -6,11 +6,10 @@ import { ChevronDown, ChevronUp, Clock, Play, Star } from "react-feather";
 
 
 
-const Carousel = () => {
+const Carousel = ({ Animes }) => {
   var isMouseOver = false;
   const OnMouseEnter = () => {
     isMouseOver = true;
-    console.log("Carousel Paused:", isMouseOver);
   };
   const OnMouseExit = () => {
     isMouseOver = false;
@@ -63,13 +62,13 @@ const Carousel = () => {
           id="sliderContent"
           className="flex flex-col w-full h-full snap-y snap-mandatory overflow-auto scroll-smooth transition-all scrollbar-hide"
         >
-          {props?.Animes == null &&
+          {Animes == null &&
             Array.from(Array(10), (e, i) => {
               return (
                 <div className="h-96 w-full animate-pulse bg-white/10 backdrop-blur-xl rounded"></div>
               );
             })}
-          {props.Animes?.map((ani, key) => (
+          {Animes?.map((ani, key) => (
             <div
               key={key}
               className="slide relative flex w-full snap-center bg-black"
