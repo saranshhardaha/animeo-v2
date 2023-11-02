@@ -17,11 +17,14 @@ function AnimeDetail() {
 
   useEffect(() => {
     async function FetchResults() {
-      if (animeId)
-        await anilist.fetchAnimeInfo(animeId).then((data) => {
+      if (animeId) {
+        await anilist.fetchAnilistInfoById(animeId).then((data) => {
           setResponse(data);
-          setEpisodes(data.episodes);
         });
+        await anilist.fetchEpisodesListById(animeId).then((data) => {
+          setEpisodes(data);
+        });
+      }
     }
     FetchResults();
   }, [animeId]);
